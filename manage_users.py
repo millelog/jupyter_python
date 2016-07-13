@@ -19,14 +19,17 @@ def add_user(first, last, user, email, group, db):
 	info = {'first' : [first], 'last' : [last], 'ONID' : [user], 'email' : [email] }
 	db.set_info(info, group, [passwd])
 	db.insert_info()
+	print(user+' has been created sucesfully')
 
 def remove_user(ONID, db):
 	db.remove_user(ONID)
 	subprocess.check_output(["sudo", "userdel", "-r", ONID])
+	print(ONID+' has been deleted succesfully')
 
 def set_custom_password(ONID, passwd, db):
 	db.add_custom_password(ONID, passwd)
 	subprocess.check_output(["sudo","./passwd.exp", ONID, passwd])
+	print(ONID+' has changed their password succesfully')
 
 def create_form():
 	#display the table

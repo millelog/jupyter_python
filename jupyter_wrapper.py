@@ -47,22 +47,28 @@ class jupyter_wrapper(object):
 
 	def on_form_clicked(self, b):
 		users.create_form()
+		self.draw_pages()
 
 	def on_submit_clicked(self, b):
 		users.add_user(self.first.value, self.last.value, self.ONID.value,
 			self.email.value, self.group.value, users.create_database())
+		self.draw_pages()
 
 	def draw_input_box(self):
-		
 		display(user_info)
 
 	def on_add_clicked(self, b):
 		self.draw_input_box()
+		self.draw_pages()
 
 	def on_remove_clicked(self, b):
-		return None
+		print(self.user.value)
+		users.remove_user(self.user.value, users.create_database())
+		self.draw_pages()
+
 	def on_pass_clicked(self, b):
-		return None
+		users.set_custom_password(self.user2.value, self.password.value, users.create_database())
+		self.draw_pages()
 
 	def draw_pages(self):
 		tabs = widgets.Tab(children = [self.page1, self.page2, self.page3, self.page4])
