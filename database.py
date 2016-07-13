@@ -22,7 +22,6 @@ class database(object):
 		"""try a connection to the database path"""
 		try:
 			self.conn = sqlite3.connect(self.db_path)
-			print("connection created")
 		except sqlite3.Error:
 			print("Error connecting to database")
 
@@ -41,7 +40,7 @@ class database(object):
 			'{e}' {tf} NOT NULL);'''\
 			.format(tn=self.tn, id=self.onid, tf='TEXT', dp=self.dp, cp=self.cp, gr=self.g, f=self.f, l=self.l, e=self.e))
 		#print confimration and commit changes
-		print('Table created')
+		print('Database object instantiated')
 		self.commit_db()
 
 	def log_users_creation(self):
@@ -131,7 +130,6 @@ class database(object):
 		"""commit database changes in info and close the connection"""
 		self.conn.commit()
 		self.conn.close()
-		print('Database commited and closed')
 
 
 

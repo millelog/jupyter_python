@@ -1,6 +1,8 @@
 #Documentation:
 #https://media.readthedocs.org/pdf/ipywidgets/latest/ipywidgets.pdf
 from __future__ import print_function
+from . import manage_users as users
+from . import create_users as create
 from IPython.display import display
 from ipywidgets import *
 
@@ -45,7 +47,7 @@ class student_creation_form(object):
 
         #Contain all of these widgets into one box and format
         student_info = widgets.Box(children = subcontainers)
-        student_info.layout.border = '2px grey solid'
+        #student_info.layout.border = '2px grey solid'
         display(student_info)
 
         self.submit[i].on_click(self.on_submit_clicked)
@@ -97,6 +99,25 @@ class student_creation_form(object):
             self.valid_input(self.ONID[i].value) and\
             self.valid_input(self.email[i].value) 
 
+    #Add the list of users to the database and create their accounts
+    def add_users(self, info):
+        #instantiate database object
+        db = users.create_database()
+        print('Working... may take several minutes...')
+        #Initalize Email server
+        smtpserver = create.initialize_smtp_server('mail.engr.oregonstate.edu', 25, 'millelog', 'F1c2g3d4b5a')
+
+        #create the users and grab the passwords that are returned
+        group = 'student'
+        passwds = create.create_all_users(info['ONID'], info['email'], 
+        ['milleflog@oregonstate.edu'], smtpserver, group)
+
+        #set the info dictionary for the database class
+        db.set_info(info, group, passwds)
+
+        #Insert and commit the information dictionary to the database
+        db.insert_info()
+
 
     #Define the button's functionality
     def on_submit_clicked(self, b):
@@ -117,6 +138,7 @@ class student_creation_form(object):
                 self.button.close()
                 self.students.close()
                 print("Form correctly submitted")
+                self.add_users(self.info)
         else:
             #If one of the fields are invalid
             print('Invalid input in one or multiple fields. Please try again.')
