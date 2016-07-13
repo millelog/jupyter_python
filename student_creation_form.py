@@ -47,6 +47,7 @@ class student_creation_form(object):
         student_info = widgets.Box(children = subcontainers)
         student_info.layout.border = '2px grey solid'
         display(student_info)
+
         self.submit[i].on_click(self.on_submit_clicked)
 
 
@@ -67,8 +68,7 @@ class student_creation_form(object):
         self.last[i].close()
         self.ONID[i].close()
         self.email[i].close()
-        self.submit[i].close()
-        self.HTML[i].value = "<b>Student "+str(i+1)+": "+self.info['first'][i]+" "+self.info['last'][i]+"</b>"
+        self.submit[i].close()        
     
     #Draw the initial slider that gets number of students    
     def draw_initial_slider(self):
@@ -80,19 +80,48 @@ class student_creation_form(object):
         #Listen for button clicks
         self.button.on_click(self.on_button_clicked)
 
+    #Input validator to protect from sql injection
+    def valid_input(self, input_string):
+        valid_string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@. '+"'"
+        for char in input_string:
+            if char not in valid_string:
+                return False
+        if not input_string:
+            return False
+        return True
+
+    #Check if the current form are all valid input strings
+    def valid_form(self, i):
+        return self.valid_input(self.first[i].value) and\
+            self.valid_input(self.last[i].value) and\
+            self.valid_input(self.ONID[i].value) and\
+            self.valid_input(self.email[i].value) 
+
+
     #Define the button's functionality
     def on_submit_clicked(self, b):
-        #append student info with text boxes
-        self.append_info(self.first[self.n].value, self.last[self.n].value, 
-                    self.ONID[self.n].value, self.email[self.n].value)
-        #close the current form
-        self.close_form(self.n)
-        #if student number is less than number of students
-        if(self.n<self.students.value-1):
-            #draw the next student's form
-            self.n+=1
-            self.draw_form(self.n)
+        if(self.valid_form(self.n)):
+            #append student info with text boxes
+            self.append_info(self.first[self.n].value, self.last[self.n].value, 
+                        self.ONID[self.n].value, self.email[self.n].value)
+            #close the current form
+            self.close_form(self.n)
+            #Draw their name in the closed box
+            self.HTML[self.n].value = "<b>Student "+str(self.n+1)+": "+self.info['first'][self.n]+" "+self.info['last'][self.n]+"</b>"
+            #if student number is less than number of students
+            if(self.n<self.students.value-1):
+                #draw the next student's form
+                self.n+=1
+                self.draw_form(self.n)
+            else:
+                self.button.close()
+                self.students.close()
+                print("Form correctly submitted")
         else:
-            self.button.close()
-            self.students.close()
-            print("Form correctly submitted")
+            #If one of the fields are invalid
+            print('Invalid input in one or multiple fields. Please try again.')
+            #Close all widgets
+            self.close_form(self.n)
+            self.HTML[self.n].close()
+            #Redraw current student
+            self.draw_form(self.n)
