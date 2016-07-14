@@ -28,12 +28,13 @@ def remove_user(ONID, db):
 
 def set_custom_password(ONID, passwd, db):
 	db.add_custom_password(ONID, passwd)
-	subprocess.check_output(["sudo","./passwd.exp", ONID, passwd])
+	subprocess.check_output(["sudo","./jupyter_python/passwd.exp", ONID, passwd])
 	print(ONID+' has changed their password succesfully')
 
 def create_form():
 	#display the table
 	form = ipython_form.student_creation_form()
+	print('All student accounts correctly created')
 
 
 def create_database():
@@ -42,7 +43,7 @@ def create_database():
 	return db
 
 def valid_input(input_string):
-        valid_string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@. '+"'"
+        valid_string = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@._ \''
         for char in input_string:
             if char not in valid_string:
                 return False

@@ -71,7 +71,7 @@ def send_new_user_email(email, user, passwd, smtpserver):
 
 	try:
 		smtpserver.sendmail(from_email, to_email, message)
-	except SMTPException:
+	except smtplib.SMTPException:
 		print("Error: unable to send email")
 
 #Create the new user with given user name, group and password
@@ -85,7 +85,7 @@ def create_user(user, passwd, group, email, smtpserver):
 		add_to_group('student', user);
         
 	#set all file permissions
-	subprocess.check_output(["sudo", "chown", "-R", ":instructor", "/home/"+str(user)])
+	subprocess.check_output(["sudo", "chown", ":instructor", "/home/"+str(user)])
 	subprocess.check_output(["sudo", "chmod", "-R", "770", "/home/"+str(user)])
     
     

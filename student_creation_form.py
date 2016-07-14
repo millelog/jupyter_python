@@ -62,6 +62,8 @@ class student_creation_form(object):
 
     #Draw first form when num_students submitted
     def on_button_clicked(self, b):
+        self.students.close()
+        self.button.close()
         self.draw_form(self.n)
         
     #close all of the widgets associated with taking input for student i
@@ -84,7 +86,7 @@ class student_creation_form(object):
 
     #Input validator to protect from sql injection
     def valid_input(self, input_string):
-        valid_string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@. '+"'"
+        valid_string = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@._ \''
         for char in input_string:
             if char not in valid_string:
                 return False
@@ -135,8 +137,6 @@ class student_creation_form(object):
                 self.n+=1
                 self.draw_form(self.n)
             else:
-                self.button.close()
-                self.students.close()
                 print("Form correctly submitted")
                 self.add_users(self.info)
         else:
