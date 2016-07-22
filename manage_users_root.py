@@ -13,7 +13,7 @@ def add_user(first, last, user, email, group, db):
 
 	#create password then create student
 	passwd = create.generate_passwd()
-	create.create_user(user, passwd, group, email, smtpserver)
+	create.create_user_root(user, passwd, group, email, smtpserver)
 	#format for passing it into the database
 	info = {'first' : [first], 'last' : [last], 'ONID' : [user], 'email' : [email] }
 	db.set_info(info, group, [passwd])
