@@ -74,12 +74,30 @@ def send_new_user_email(email, user, passwd, smtpserver):
 	except smtplib.SMTPException:
 		print("Error: unable to send email")
 
+def create_user_root(user, passwd, group, email, smtpserver):
+	#Create the user and set their default group
+	subprocess.check_output(["useradd","-m", "-g", group, user])
+	#Set their password
+	subprocess.check_output(["/home/jupyter_python/passwd.exp", user, passwd])
+    	#If they're an instructor add them to student group
+	if(group == 'instructor'):
+		add_to_group('student', user);
+        
+	#set all file permissions
+	subprocess.check_output(["chown", ":instructor", "/home/"+str(user)])
+	subprocess.check_output(["chmod", "-R", "770", "/home/"+str(user)])
+    
+    
+	#send and email to this user with the random password
+	send_new_user_email(email, user, passwd, smtpserver)
+	print("User: "+user+" Password: " + passwd + " Email: " + email)
+
 #Create the new user with given user name, group and password
 def create_user(user, passwd, group, email, smtpserver):
 	#Create the user and set their default group
 	subprocess.check_output(["sudo","useradd","-m", "-g", group, user])
 	#Set their password
-	subprocess.check_output(["sudo","/home/bigbenny/jupyter_python/passwd.exp", user, passwd])
+	subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", user, passwd])
     #If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group('student', user);
