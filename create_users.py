@@ -71,7 +71,7 @@ def send_new_user_email(email, user, passwd, smtpserver):
 	An account has been created under your ONID username and email for the online coding platform Jupyter Notebook. Please go to the link provided and use the following credentials to login.\n
 	Username: %s
 	Password: %s
-	Link: http://52.87.197.201:8000
+	Link: http://ec2-54-175-245-128.compute-1.amazonaws.com:8000
 	""" % (user, email, user, passwd))
 
 	try:
