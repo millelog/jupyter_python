@@ -45,7 +45,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 	message = """	To: %s
 	From: %s
 	Subject: New Users Added to Jupyterhub
-	A list of new accounts has been added to the Jupyterhub interface. Their default credentials are as follows.
+	A list of new accounts has been added to the Jupyterhub interface. Their default credentials are as follows.\n
 	""" %(instructor_email, from_email)
 
 	for i in range(len(users)):
@@ -67,8 +67,8 @@ def send_new_user_email(email, user, passwd, smtpserver):
 	from_email = 'millelog@oregonstate.edu'
 	message = 'Subject: %s\n\n%s' % ("[Important] Jupyter Notebook Account","""To: %s <%s>
 	From: Logan Miller <millelog@oregonstate.edu>
-	Subject: [Important] Jupyter Notebook Account Password
-	An account has been created under your ONID username and email for the online coding platform Jupyter Notebook. Please go to the link provided and use the following credentials to login.
+	Subject: [Important] Jupyter Notebook Account Password\n\n
+	An account has been created under your ONID username and email for the online coding platform Jupyter Notebook. Please go to the link provided and use the following credentials to login.\n
 	Username: %s
 	Password: %s
 	Link: http://52.87.197.201:8000
