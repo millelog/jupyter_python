@@ -18,6 +18,11 @@ def add_to_group(group, user):
 	subprocess.check_output(["sudo", "usermod", "-a", "-G", group, user])
 	#print confirmation
 	print("Added "+user+" to group "+group)
+	
+def add_to_group_root(group, user):
+	subprocess.check_output(["usermod", "-a", "-G", group, user])
+	#print confirmation
+	print("Added "+user+" to group "+group)
 
 #Generate a 10 character long string of randome lower case letters
 def generate_passwd():
@@ -81,7 +86,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
 	subprocess.check_output(["/home/jupyter_python/passwd.exp", user, passwd])
     	#If they're an instructor add them to student group
 	if(group == 'instructor'):
-		add_to_group('student', user);
+		add_to_group_root('student', user);
         
 	#set all file permissions
 	subprocess.check_output(["chown", ":instructor", "/home/"+str(user)])
