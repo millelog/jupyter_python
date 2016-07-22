@@ -78,6 +78,11 @@ def send_new_user_email(email, user, passwd, smtpserver):
 		smtpserver.sendmail(from_email, to_email, message)
 	except smtplib.SMTPException:
 		print("Error: unable to send email")
+		
+def copy_instructor_interface(user):
+	subprocess.check_output(["mkdir","/home/"+user+"/jupyter_python"])
+	subprocess.check_output(["cp","/home/jupyter_python/*","/home/"+user+"/jupyter_python"])
+	subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
 
 def create_user_root(user, passwd, group, email, smtpserver):
 	#Create the user and set their default group
@@ -87,6 +92,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
     	#If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group_root('student', user);
+		copy_instructor_interface(user);
         
 	#set all file permissions
 	subprocess.check_output(["chown", ":instructor", "/home/"+str(user)])
@@ -106,6 +112,7 @@ def create_user(user, passwd, group, email, smtpserver):
     #If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group('student', user);
+		copy_instructor_interface(user)
         
 	#set all file permissions
 	subprocess.check_output(["sudo", "chown", ":instructor", "/home/"+str(user)])
