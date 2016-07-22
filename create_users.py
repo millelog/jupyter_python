@@ -80,8 +80,7 @@ def send_new_user_email(email, user, passwd, smtpserver):
 		print("Error: unable to send email")
 		
 def copy_instructor_interface(user):
-	subprocess.check_output(["mkdir","/home/"+user+"/jupyter_python"])
-	subprocess.check_output(["cp","/home/jupyter_python/*","/home/"+user+"/jupyter_python"])
+	subprocess.check_output(["cp","-r","/home/jupyter_python","/home/"+user+"/jupyter_python"])
 	subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
 
 def create_user_root(user, passwd, group, email, smtpserver):
