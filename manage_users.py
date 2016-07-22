@@ -27,7 +27,7 @@ def remove_user(ONID, db):
 	print(ONID+' has been deleted succesfully')
 
 def set_custom_password(ONID, passwd, db):
-	subprocess.check_output(["sudo","./jupyter_python/passwd.exp", ONID, passwd])
+	subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", ONID, passwd])
 	print(ONID+' has changed their password succesfully')
 
 def create_form():
