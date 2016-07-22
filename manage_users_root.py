@@ -1,6 +1,5 @@
-from . import student_creation_form as ipython_form
-from . import create_users as create
-from . import database as data
+import create_users as create
+import database as data
 import sys
 import subprocess
 import argparse
@@ -23,18 +22,12 @@ def add_user(first, last, user, email, group, db):
 
 def remove_user(ONID, db):
 	db.remove_user(ONID)
-	subprocess.check_output(["sudo", "userdel", "-r", ONID])
+	subprocess.check_output(["userdel", "-r", ONID])
 	print(ONID+' has been deleted succesfully')
 
 def set_custom_password(ONID, passwd, db):
-	subprocess.check_output(["sudo","./jupyter_python/passwd.exp", ONID, passwd])
+	subprocess.check_output(["./jupyter_python/passwd.exp", ONID, passwd])
 	print(ONID+' has changed their password succesfully')
-
-def create_form():
-	#display the table
-	form = ipython_form.student_creation_form()
-	print('All student accounts correctly created')
-
 
 def create_database():
 	db = data.database()
@@ -55,11 +48,11 @@ def parse_args():
 	parser = argparse.ArgumentParser(description='Command line input to manage jupyter hub users')
 	#add the possible arguments (functions above)
 	parser.add_argument('-a', '--add_user', dest='user_info', nargs='+',
-		help = "Create a new Jupyter user. \nFormat: manage_users.py --add_user <first> <last> <ONID> <email> <group>")
+		help = "Create a new Jupyter user. \nFormat: manage_users_root.py --add_user <first> <last> <ONID> <email> <group>")
 	parser.add_argument('-r', '--remove_user', dest='remove_student',
-		help = "Delete a Jupyter user by ONID. \nFormat: manage_users.py --remove_user <ONID>")
+		help = "Delete a Jupyter user by ONID. \nFormat: manage_users_root.py --remove_user <ONID>")
 	parser.add_argument('-p', '--password', dest='user_pass', nargs='+',
-		help = "Set a custom password for a given ONID. \nFormat: manage_users.py --password <ONID> <password>")
+		help = "Set a custom password for a given ONID. \nFormat: manage_users_root.py --password <ONID> <password>")
 	return parser.parse_args()
 
 def main():
@@ -89,7 +82,7 @@ def main():
 		print(args.user_pass[0]+'\'s password was succesfully changed')
 
 	else:
-		print('Invalid command line syntax. please use manage_users.py --help')
+		print('Invalid command line syntax. please use manage_users_root.py --help')
 
 if __name__ == '__main__':
 	main()

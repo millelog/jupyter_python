@@ -11,7 +11,6 @@ class database(object):
 		self.tn = 'users'
 		self.onid = 'ONID'
 		self.dp = 'default_pass'
-		self.cp = 'custom_pass'
 		self.g = 'group'
 		self.f = 'first'
 		self.l = 'last'
@@ -33,12 +32,11 @@ class database(object):
 		c.execute('''CREATE TABLE IF NOT EXISTS '{tn}' (
 			'{id}' {tf} PRIMARY KEY,
 			'{dp}' {tf} NOT NULL,
-			'{cp}' {tf},
 			'{gr}' {tf} NOT NULL,
 			'{f}' {tf} NOT NULL,
 			'{l}' {tf} NOT NULL,
 			'{e}' {tf} NOT NULL);'''\
-			.format(tn=self.tn, id=self.onid, tf='TEXT', dp=self.dp, cp=self.cp, gr=self.g, f=self.f, l=self.l, e=self.e))
+			.format(tn=self.tn, id=self.onid, tf='TEXT', dp=self.dp, gr=self.g, f=self.f, l=self.l, e=self.e))
 		#print confimration and commit changes
 		print('Database object instantiated')
 		self.commit_db()
@@ -97,25 +95,6 @@ class database(object):
 		c.execute(sql)
 		self.commit_db()
 
-	def add_custom_password(self, ONID, passwd):
-		"""fills a user's custom password field given an onid and password"""
-		ONID = ONID.lower()
-		#connect to database
-		self.get_connection()
-		c = self.conn.cursor()
-		#sql command
-		sql = """
-		UPDATE {tn}
-		SET {cp} = '{p}'
-		WHERE {onid} = '{user}'
-		""".format(tn=self.tn, cp=self.cp, p=passwd, onid=self.onid, user=ONID)
-		#Log the password creation
-		with open("log.txt", "a") as log:
-			log.write(str(datetime.now())+" : custom password set : "+ONID+" -> "+passwd+"\n")
-			log.close()
-		#Execute the command commit to database
-		c.execute(sql)
-		self.commit_db()
 
 	def print_db(self):
 		self.get_connection()
