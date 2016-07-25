@@ -44,7 +44,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 	subject = "New Users Added to Jupyterhub"
 	message = """	To: %s
 	From: %s
-	Subject: New User(s) Added to Jupyterhub
+	Subject: New User(s) Added to Jupyterhub\n\n
 	A list of new account(s) has been added to the Jupyterhub interface. Their default credentials are as follows.\n
 	""" %(instructor_email, from_email)
 
