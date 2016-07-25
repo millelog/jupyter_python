@@ -95,6 +95,14 @@ class database(object):
 		c.execute(sql)
 		self.commit_db()
 
+	def get_instructors(self):
+		self.get_connection()
+		c=self.conn.cursor()
+		onids = []
+		for row in c.execute("SELECT {onid} FROM {tn} WHERE {gr} = {inst}".\
+			format(onid=self.onid, tn = self.tn, gr = self.gr, inst = 'instructor')):
+				onids.append(row)
+		return onids
 
 	def print_db(self):
 		self.get_connection()
