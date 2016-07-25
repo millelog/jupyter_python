@@ -44,8 +44,8 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 	subject = "New Users Added to Jupyterhub"
 	message = """	To: %s
 	From: %s
-	Subject: New Users Added to Jupyterhub
-	A list of new accounts has been added to the Jupyterhub interface. Their default credentials are as follows.\n
+	Subject: New User(s) Added to Jupyterhub
+	A list of new account(s) has been added to the Jupyterhub interface. Their default credentials are as follows.\n
 	""" %(instructor_email, from_email)
 
 	for i in range(len(users)):
@@ -60,7 +60,10 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 	except SMTPException:
 		print("Error: unable to send email")
 
-
+def get_instructor_emails():
+	with open(instructor_emails.txt) as file:
+		emails = f.readlines()
+	return emails
 
 def send_new_user_email(email, user, passwd, smtpserver):
 	to_email = email
@@ -78,6 +81,8 @@ def send_new_user_email(email, user, passwd, smtpserver):
 		smtpserver.sendmail(from_email, to_email, message)
 	except smtplib.SMTPException:
 		print("Error: unable to send email")
+	for instructor_email in get_instructor_emails():
+		send_instructor_email(instructor_email, [user], [passwd], [email], smtpserver)
 		
 def copy_instructor_interface(user):
 	subprocess.check_output(["cp","-r","/home/jupyter_python","/home/"+user+"/jupyter_python"])
@@ -127,7 +132,7 @@ def create_user(user, passwd, group, email, smtpserver):
 	send_new_user_email(email, user, passwd, smtpserver)
 	print("User: "+user+" Password: " + passwd + " Email: " + email)
 
-def create_all_users(users, emails, instructor_emails, smtpserver, group):
+def create_all_users(users, emails, smtpserver, group):
 	#list of passwds
 	passwds = []
 	#For all the users in the file
@@ -143,8 +148,7 @@ def create_all_users(users, emails, instructor_emails, smtpserver, group):
 			#create a new user
 			create_user(user, passwd, group, emails[users.index(user)], smtpserver)
 
-
-	for instructor_email in instructor_emails:
+	for instructor_email in get_instructor_emails():
 		send_instructor_email(instructor_email, users, passwds, emails, smtpserver)
 
 	return passwds;
