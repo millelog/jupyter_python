@@ -61,7 +61,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 		print("Error: unable to send email")
 
 def get_instructor_emails():
-	with open(instructor_emails.txt) as file:
+	with open("instructor_emails.txt", "a") as file:
 		emails = f.readlines()
 	emails = [x.strip('\n') for x in emails]
 	return emails
