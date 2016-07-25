@@ -61,7 +61,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 		print("Error: unable to send email")
 
 def get_instructor_emails():
-	with open("instructor_email.txt", "r") as file:
+	with open("/srv/cgrb/instructor_email.txt", "r") as file:
 		emails = f.readlines()
 	emails = [x.strip('\n') for x in emails]
 	return emails
@@ -90,7 +90,7 @@ def copy_instructor_interface(user):
 	subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
 
 def add_instructor_email(email):
-	with open("instructor_email.txt", "a") as file:
+	with open("/srv/cgrb/instructor_email.txt", "a") as file:
 		file.write(email)
 
 def create_user_root(user, passwd, group, email, smtpserver):
