@@ -63,6 +63,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 def get_instructor_emails():
 	with open(instructor_emails.txt) as file:
 		emails = f.readlines()
+	emails = [x.strip('\n') for x in emails]
 	return emails
 
 def send_new_user_email(email, user, passwd, smtpserver):
