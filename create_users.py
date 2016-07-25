@@ -83,6 +83,10 @@ def copy_instructor_interface(user):
 	subprocess.check_output(["cp","-r","/home/jupyter_python","/home/"+user+"/jupyter_python"])
 	subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
 
+def add_instructor_email(email):
+	with open("instructor_email.txt", "a") as file:
+		file.write(email)
+
 def create_user_root(user, passwd, group, email, smtpserver):
 	#Create the user and set their default group
 	subprocess.check_output(["useradd","-m", "-g", group, user])
@@ -92,6 +96,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
 	if(group == 'instructor'):
 		add_to_group_root('student', user);
 		copy_instructor_interface(user);
+		add_instructor_email(email);
         
 	#set all file permissions
 	subprocess.check_output(["chown", ":instructor", "/home/"+str(user)])
