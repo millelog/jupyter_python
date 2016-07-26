@@ -64,7 +64,7 @@ def parse_args():
 	#add the possible arguments (functions above)
 	parser.add_argument('-a', '--add_user', dest='user_info', nargs='+',
 		help = "Create a new Jupyter user. \nFormat: manage_users.py --add_user <first> <last> <ONID> <email> <group> <IsRoot(optional bool)")
-	parser.add_argument('-r', '--remove_user', dest='remove_student', nargs='+'
+	parser.add_argument('-r', '--remove_user', dest='remove_student', nargs='+',
 		help = "Delete a Jupyter user by ONID. \nFormat: manage_users.py --remove_user <ONID> <IsRoot(optional bool)>")
 	parser.add_argument('-p', '--password', dest='user_pass', nargs='+',
 		help = "Set a custom password for a given ONID. \nFormat: manage_users.py --password <ONID> <password> <IsRoot(optional bool)>")
@@ -93,7 +93,7 @@ def main():
 			#if first 5 args are valid
 			if all(valid_input(info[i]) for i in range(5)):
 				#add the user
-				add_user(info[0], info[1], info[2], info[3], info[4], db, info[5])
+				add_user(info[0], info[1], info[2], info[3], info[4], db, True)
 				print(info[2]+' was succesfully created.')
 			else:
 				print('Invalid inputs. please only use valid characters.')
@@ -105,7 +105,7 @@ def main():
 			remove_user(args.remove_student[0], db)
 		elif len(args.remove_student)==2:
 			#is root
-			remove_user(args.remove_student[0], db, args.remove_student[1])
+			remove_user(args.remove_student[0], db, True)
 		print(args.remove_student+' was succesfully removed.')
 	
 	elif args.user_pass and (len(args.user_pass)==2 or len(args.user_pass)==3):
@@ -113,7 +113,7 @@ def main():
 		if(len(args.user_pass)==2):
 			set_custom_password(args.user_pass[0], args.user_pass[1], db)
 		elif(len(args.user_pass)==3):
-			set_custom_password(args.user_pass[0], args.user_pass[1], db, args.user_pass[2])
+			set_custom_password(args.user_pass[0], args.user_pass[1], db, True)
 		print(args.user_pass[0]+'\'s password was succesfully changed')
 
 	else:
