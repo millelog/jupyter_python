@@ -62,7 +62,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 
 def get_instructor_emails():
 	with open("/srv/cgrb/instructor_email.txt", "r") as file:
-		emails = f.readlines()
+		emails = file.readlines()
 	emails = [x.strip('\n') for x in emails]
 	return emails
 
