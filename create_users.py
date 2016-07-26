@@ -105,7 +105,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
 		add_instructor_email(email);
         
 	#set all file permissions
-	subprocess.check_output(["chown", ":instructor", "/home/"+str(user)])
+	subprocess.check_output(["chown", "-R", ":instructor", "/home/"+str(user)])
 	subprocess.check_output(["chmod", "-R", "770", "/home/"+str(user)])
     
     
@@ -119,15 +119,15 @@ def create_user(user, passwd, group, email, smtpserver):
 	subprocess.check_output(["sudo","useradd","-m", "-g", group, user])
 	#Set their password
 	subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", user, passwd])
-    #If they're an instructor add them to student group
+    	#If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group('student', user);
 		copy_instructor_interface(user)
+		add_instructor_email(email)
         
 	#set all file permissions
-	subprocess.check_output(["sudo", "chown", ":instructor", "/home/"+str(user)])
+	subprocess.check_output(["sudo", "chown", "-R", ":instructor", "/home/"+str(user)])
 	subprocess.check_output(["sudo", "chmod", "-R", "770", "/home/"+str(user)])
-    
     
 	#send and email to this user with the random password
 	send_new_user_email(email, user, passwd, smtpserver)
