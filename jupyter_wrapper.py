@@ -1,5 +1,5 @@
 from __future__ import print_function
-from . import manage_users as users
+import manage_users as users
 from IPython.display import display
 from ipywidgets import *
 
