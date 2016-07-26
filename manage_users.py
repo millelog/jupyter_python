@@ -1,6 +1,6 @@
-from . import student_creation_form as ipython_form
-from . import create_users as create
-from . import database as data
+import student_creation_form as ipython_form
+import create_users as create
+import database as data
 import sys
 import subprocess
 import argparse
