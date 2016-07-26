@@ -1,8 +1,8 @@
 #Documentation:
 #https://media.readthedocs.org/pdf/ipywidgets/latest/ipywidgets.pdf
 from __future__ import print_function
-from . import manage_users as users
-from . import create_users as create
+import manage_users as users
+import create_users as create
 from IPython.display import display
 from ipywidgets import *
 
