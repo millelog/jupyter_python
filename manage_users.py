@@ -25,10 +25,10 @@ def add_user(first, last, user, email, group, db, root=False):
 	#set permissions for the database
 	if(root):
 		subprocess.check_output(["chown", "-R", ":instructor", "/srv/cgrb"])
-		subprocess.ceck_output(["chmod", "g+wrx", "/srv/cgrb"])
+		subprocess.check_output(["chmod", "g+wrx", "/srv/cgrb"])
 	else:
 		subprocess.check_output(["sudo", "chown", "-R", ":instructor", "/srv/cgrb"])
-        	subprocess.ceck_output(["sudo", "chmod", "g+wrx", "/srv/cgrb"])
+        	subprocess.check_output(["sudo", "chmod", "g+wrx", "/srv/cgrb"])
 
 	print(user+' has been created sucesfully')
 
