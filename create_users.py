@@ -86,7 +86,6 @@ def send_new_user_email(email, user, passwd, smtpserver):
 		send_instructor_email(instructor_email, [user], [passwd], [email], smtpserver)
 		
 def copy_instructor_interface(user):
-	subprocess.check_output(["cp","-r","/home/jupyter_python","/home/"+user+"/jupyter_python"])
 	subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
 
 def add_instructor_email(email):
