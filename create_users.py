@@ -115,7 +115,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
 
 #Create the new user with given user name, group and password
 def create_user(user, passwd, group, email, smtpserver):
-	subprocess.check_output(["sudo", "chown", "-R", ":instructor", "/srv"])
+	subprocess.check_output(["sudo", "chown", "-R", ":instructor", "/srv/cgrb"])
 	#Create the user and set their default group
 	subprocess.check_output(["sudo","useradd","-m", "-g", group, user])
 	#Set their password
