@@ -110,12 +110,11 @@ class student_creation_form(object):
         smtpserver = create.initialize_smtp_server('mail.engr.oregonstate.edu', 25, 'millelog', 'F1c2g3d4b5a')
 
         #create the users and grab the passwords that are returned
-        group = 'student'
         passwds = create.create_all_users(info['ONID'], info['email'], 
-        ['milleflog@oregonstate.edu'], smtpserver, group)
+        ['milleflog@oregonstate.edu'], smtpserver)
 
         #set the info dictionary for the database class
-        db.set_info(info, group, passwds)
+        db.set_info(info, 'student', passwds)
 
         #Insert and commit the information dictionary to the database
         db.insert_info()
