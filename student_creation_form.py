@@ -111,7 +111,7 @@ class student_creation_form(object):
 
         #create the users and grab the passwords that are returned
         passwds = create.create_all_users(info['ONID'], info['email'], 
-        ['milleflog@oregonstate.edu'], smtpserver)
+        smtpserver, 'student')
 
         #set the info dictionary for the database class
         db.set_info(info, 'student', passwds)
