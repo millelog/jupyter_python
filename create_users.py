@@ -106,9 +106,6 @@ def create_user_root(user, passwd, group, email, smtpserver):
 	#set all file permissions
 	subprocess.check_output(["chown", "-R", ":instructor", "/home/"+str(user)])
 	subprocess.check_output(["chmod", "-R", "770", "/home/"+str(user)])
-	subprocess.check_output(["chown", "-R", ":instructor", "/srv/cgrb"])
-	subprocess.ceck_output(["chmod", "g+wrx", "/srv/cgrb"])
-    
     
 	#send and email to this user with the random password
 	send_new_user_email(email, user, passwd, smtpserver)
