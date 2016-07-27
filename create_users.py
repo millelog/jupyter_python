@@ -4,7 +4,9 @@ import subprocess
 import pwd
 import random
 import smtplib
-
+#add somehwere
+#subprocess.check_output(["chown", "-R", ":instructor", "/srv/cgrb"])
+#subprocess.check_output(["chmod", "g+wrx", "/srv/cgrb"])
 #Check if a given user name exists already
 def is_user(user):
 	try:
