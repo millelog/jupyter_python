@@ -28,7 +28,7 @@ def add_user(first, last, user, email, group, db, root=False):
 		subprocess.check_output(["chmod", "g+wrx", "/srv/cgrb"])
 	else:
 		subprocess.check_output(["sudo", "chown", "-R", ":instructor", "/srv/cgrb"])
-        	subprocess.check_output(["sudo", "chmod", "-R", "g+wrx", "/srv/cgrb"])
+		subprocess.check_output(["sudo", "chmod", "-R", "g+wrx", "/srv/cgrb"])
 
 	print(user+' has been created sucesfully')
 
