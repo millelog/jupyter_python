@@ -43,7 +43,7 @@ class database(object):
 		self.commit_db()
 
 	def log_users_creation(self):
-		with open("log.txt", "a") as log:
+		with open("/srv/log.txt", "a") as log:
 			for i in range(len(self.info['ONID'])):
 				log.write(str(datetime.now())+" : added to database : "+self.info['ONID'][i]+" "+self.info['pass'][i]\
 					+" "+self.info['first'][i]+" "+self.info['last'][i]+" "+self.info['group'][i]+" "+self.info['email'][i]+"\n")
@@ -87,7 +87,7 @@ class database(object):
 		WHERE {onid} = '{user}'
 		""".format(tn=self.tn, onid=self.onid, user=ONID)
 		#log the account deletion
-		with open("log.txt", "a") as log:
+		with open("/srv/log.txt", "a") as log:
 			log.write(str(datetime.now())+" : deleted from database : "+ONID+"\n")
 			log.close()
 		#Execute the command and commit it to the database
