@@ -102,6 +102,14 @@ class database(object):
 			format(onid=self.onid, tn = self.tn, gr = self.gr, inst = 'instructor')):
 				onids.append(row)
 		return onids
+		
+	def get_onids(self):
+		self.get_connection()
+		c = self.conn.cursor()
+		onids = []
+		for row in c.execute("SELECT '{onid}', * FROM {tn}".format(onid=self.onid, tn=self.tn)):
+			onids.append(row)
+		return onids
 
 	def print_db(self):
 		self.get_connection()
