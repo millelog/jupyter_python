@@ -40,6 +40,8 @@ def set_custom_password(ONID, passwd, db, root=False):
 		subprocess.check_output(["/home/jupyter_python/passwd.exp", ONID, passwd])
 	else:
 		subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", ONID, passwd])
+	with open("/srv/log.txt", "a") as log:
+		
 
 def create_form():
 	#display the table
