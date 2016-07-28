@@ -57,7 +57,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 
 	try:
 		smtpserver.sendmail(from_email, instructor_email, mail)
-	except SMTPException:
+	except smtplib.SMTPException:
 		print("Error: unable to send email")
 
 def get_instructor_emails():
@@ -75,12 +75,12 @@ def send_new_user_email(email, user, passwd, smtpserver):
 	An account has been created under your ONID username and email for the online coding platform Jupyter Notebook. Please go to the link provided and use the following credentials to login.\n
 	Username: %s
 	Password: %s
-	Link: http://ec2-54-175-245-128.compute-1.amazonaws.com:8000
+	Link: http://jupyter.cgrb.oregonstate.edu
 	""" % (user, email, user, passwd))
 
 	try:
 		smtpserver.sendmail(from_email, to_email, message)
-	except smtplib.SMTPException:
+	except smtplib.smtplib.SMTPException:
 		print("Error: unable to send email")
 	for instructor_email in get_instructor_emails():
 		send_instructor_email(instructor_email, [user], [passwd], [email], smtpserver)
