@@ -110,7 +110,7 @@ def main():
 		elif len(args.remove_student)==2:
 			#is root
 			remove_user(args.remove_student[0], db, True)
-		print(args.remove_student+' was succesfully removed.')
+		print(args.remove_student[0]+' was succesfully removed.')
 	
 	elif args.user_pass and (len(args.user_pass)==2 or len(args.user_pass)==3):
 		#Set the custom password
