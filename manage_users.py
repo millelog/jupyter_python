@@ -44,7 +44,6 @@ def set_custom_password(ONID, passwd, db, root=False):
 def create_form():
 	#display the table
 	form = ipython_form.student_creation_form()
-	print('All student accounts correctly created')
 
 
 def create_database():
