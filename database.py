@@ -1,5 +1,7 @@
 import sqlite3
+import subprocess
 import sys
+import os
 from datetime import datetime
 
 class database(object):
@@ -16,6 +18,11 @@ class database(object):
 		self.l = 'last'
 		self.e = 'email'
 		self.conn = None
+		if not os.path.isfile(self.db_path):
+			self.get_connection()
+			subprocess.check_output(["chown", "-R", ":instructor", "/srv/cgrb"])
+			subprocess.check_output(["chmod", "g+wrx", "/srv/cgrb"])
+			
 
 	def get_connection(self):
 		"""try a connection to the database path"""
