@@ -17,12 +17,7 @@ class database(object):
 		self.f = 'first'
 		self.l = 'last'
 		self.e = 'email'
-		self.conn = None
-		if not os.path.isfile(self.db_path):
-			self.get_connection()
-			subprocess.check_output(["chown", "-R", ":instructor", "/srv/cgrb"])
-			subprocess.check_output(["chmod", "g+wrx", "/srv/cgrb"])
-			
+		self.conn = self.get_connection()
 
 	def get_connection(self):
 		"""try a connection to the database path"""
@@ -32,8 +27,6 @@ class database(object):
 			print("Error connecting to database")
 
 	def create_table(self):
-		#connect to database
-		self.get_connection()
 		c = self.conn.cursor()
 		#Create the table with the proper initial columns
 		c.execute('''CREATE TABLE IF NOT EXISTS '{tn}' (
@@ -57,8 +50,6 @@ class database(object):
 
 	def insert_info(self):
 		"""Insert all of the information from the info dictionary into the sql database"""
-		#connect to database
-		self.get_connection()
 		c = self.conn.cursor()
 		#For every ONID in the dictionary
 		for i in range(len(self.info['ONID'])):
@@ -86,8 +77,6 @@ class database(object):
 	def remove_user(self, ONID):
 		"""Given an ONID this function will remove that student from the database"""
 		ONID = ONID.lower()
-		#connect to database
-		self.get_connection()
 		c = self.conn.cursor()
 		#sql command string
 		sql = """
@@ -103,7 +92,6 @@ class database(object):
 		self.commit_db()
 
 	def get_instructors(self):
-		self.get_connection()
 		c=self.conn.cursor()
 		onids = []
 		for row in c.execute("SELECT {onid} FROM {tn} WHERE {gr} = {inst}".\
@@ -112,7 +100,6 @@ class database(object):
 		return onids
 
 	def print_db(self):
-		self.get_connection()
 		c = self.conn.cursor()
 		for row in c.execute("SELECT {id}, * FROM {tn} ORDER BY {onid}".\
 			format(id='rowid', tn=self.tn, onid=self.onid)):
