@@ -2,7 +2,7 @@ import student_creation_form as ipython_form
 import create_users as create
 import database as data
 import sys
-import datetime
+from datetime import datetime
 import subprocess
 import argparse
 # Hello :)
