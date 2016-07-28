@@ -118,6 +118,7 @@ class student_creation_form(object):
 
         #Insert and commit the information dictionary to the database
         db.insert_info()
+        print("All students created succesfully")
 
 
     #Define the button's functionality
