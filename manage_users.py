@@ -16,6 +16,8 @@ def add_user(first, last, user, email, group, db, root=False):
 	passwd = create.generate_passwd()
 	if(root):
 		create.create_user_root(user, passwd, group, email, smtpserver)
+		subprocess.check_output(["chown", "-R", ":instructor", "/srv/cgrb"])
+		subprocess.check_output(["chmod", "-R", "g+wrx", "/srv/cgrb"])
 	else:
 		create.create_user(user, passwd, group, email, smtpserver)
 	#format for passing it into the database
