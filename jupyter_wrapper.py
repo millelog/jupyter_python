@@ -15,22 +15,22 @@ class jupyter_wrapper(object):
 		#Individual user form
 		self.first = widgets.Text(description='First:')
 		self.last = widgets.Text(description='Last:')
-		self.ONID = widgets.Text(description='ONID:')
+		self.USER = widgets.Text(description='USER:')
 		self.email = widgets.Text(description='Email:')
 		self.group = widgets.RadioButtons(description='Group:', options=['student', 'instructor'])
 		self.submit = widgets.Button(description="Create User")
 
 		#remove user form
-		self.user = widgets.Text(description='ONID:')
+		self.user = widgets.Text(description='USER:')
 
 		#Change password form
-		self.user2 = widgets.Text(description='ONID:')
+		self.user2 = widgets.Text(description='USER:')
 		self.password = widgets.Text(description='Password:')
 
 		#Form input
 		#Combine widgets into lists for formatting
 		name = [self.first , self.last]
-		login = [self.ONID, self.email]
+		login = [self.USER, self.email]
 		group = [self.group, self.submit]
 
 		#orient the boxes horizontally
@@ -63,14 +63,14 @@ class jupyter_wrapper(object):
 	def on_submit_clicked(self, b):
 		if users.valid_input(self.first.value) and\
 		users.valid_input(self.last.value) and\
-		users.valid_input(self.ONID.value) and\
+		users.valid_input(self.USER.value) and\
 		users.valid_input(self.email.value):
 			print('Loading...')
-			users.add_user(self.replace_apostrophe(self.first.value), self.replace_apostrophe(self.last.value), self.ONID.value,
+			users.add_user(self.replace_apostrophe(self.first.value), self.replace_apostrophe(self.last.value), self.USER.value,
 				self.replace_apostrophe(self.email.value), self.group.value, users.create_database())
 		else:
 			print('Invalid input(s). Please only use valid characters.')
-			self.first.value=self.last.value=self.ONID.value=self.email.value=""
+			self.first.value=self.last.value=self.USER.value=self.email.value=""
 
 	def draw_input_box(self):
 		display(user_info)
