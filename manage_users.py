@@ -22,27 +22,27 @@ def add_user(first, last, user, email, group, db, root=False):
 	else:
 		create.create_user(user, passwd, group, email, smtpserver)
 	#format for passing it into the database
-	info = {'first' : [first], 'last' : [last], 'ONID' : [user], 'email' : [email] }
+	info = {'first' : [first], 'last' : [last], 'USER' : [user], 'email' : [email] }
 	db.set_info(info, group, [passwd])
 	db.insert_info()
 
 	print(user+' has been created sucesfully')
 
-def remove_user(ONID, db, root=False):
-	db.remove_user(ONID)
+def remove_user(USER, db, root=False):
+	db.remove_user(USER)
 	if root:
-		subprocess.check_output(["userdel", "-r", ONID])
+		subprocess.check_output(["userdel", "-r", USER])
 	else:
-		subprocess.check_output(["sudo", "userdel", "-r", ONID])
-	print(ONID+' has been deleted succesfully')
+		subprocess.check_output(["sudo", "userdel", "-r", USER])
+	print(USER+' has been deleted succesfully')
 
-def set_custom_password(ONID, passwd, db, root=False):
+def set_custom_password(USER, passwd, db, root=False):
 	if root:
-		subprocess.check_output(["/home/jupyter_python/passwd.exp", ONID, passwd])
+		subprocess.check_output(["/home/jupyter_python/passwd.exp", USER, passwd])
 	else:
-		subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", ONID, passwd])
+		subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", USER, passwd])
 #	with open("/srv/log.txt", "a") as log:
-#		log.write(str(datetime.now())+" : default password set to custom : ONID-"+ONID)
+#		log.write(str(datetime.now())+" : default password set to custom : USER-"+USER)
 
 def create_form():
 	#display the table
@@ -68,11 +68,11 @@ def parse_args():
 	parser = argparse.ArgumentParser(description='Command line input to manage jupyter hub users')
 	#add the possible arguments (functions above)
 	parser.add_argument('-a', '--add_user', dest='user_info', nargs='+',
-		help = "Create a new Jupyter user. \nFormat: manage_users.py --add_user <first> <last> <ONID> <email> <group> <IsRoot(optional bool)")
+		help = "Create a new Jupyter user. \nFormat: manage_users.py --add_user <first> <last> <USER> <email> <group> <IsRoot(optional bool)")
 	parser.add_argument('-r', '--remove_user', dest='remove_student', nargs='+',
-		help = "Delete a Jupyter user by ONID. \nFormat: manage_users.py --remove_user <ONID> <IsRoot(optional bool)>")
+		help = "Delete a Jupyter user by USER. \nFormat: manage_users.py --remove_user <USER> <IsRoot(optional bool)>")
 	parser.add_argument('-p', '--password', dest='user_pass', nargs='+',
-		help = "Set a custom password for a given ONID. \nFormat: manage_users.py --password <ONID> <password> <IsRoot(optional bool)>")
+		help = "Set a custom password for a given USER. \nFormat: manage_users.py --password <USER> <password> <IsRoot(optional bool)>")
 	return parser.parse_args()
 
 def main():
