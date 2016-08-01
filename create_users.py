@@ -58,7 +58,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 	try:
 		smtpserver.sendmail(from_email, instructor_email, mail)
 	except smtplib.SMTPException:
-		print("Error: unable to send email")
+		print("Error: unable to send email to "+instructor_email)
 
 def get_instructor_emails():
 	with open("/srv/cgrb/instructor_email.txt", "r") as file:
@@ -80,8 +80,8 @@ def send_new_user_email(email, user, passwd, smtpserver):
 
 	try:
 		smtpserver.sendmail(from_email, to_email, message)
-	except smtplib.smtplib.SMTPException:
-		print("Error: unable to send email")
+	except smtplib.SMTPException:
+		print("Error: unable to send email to "+email)
 	for instructor_email in get_instructor_emails():
 		send_instructor_email(instructor_email, [user], [passwd], [email], smtpserver)
 		
