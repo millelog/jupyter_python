@@ -15,16 +15,16 @@ class jupyter_wrapper(object):
 		#Individual user form
 		self.first = widgets.Text(description='First:')
 		self.last = widgets.Text(description='Last:')
-		self.user = widgets.Text(description='user:')
+		self.user = widgets.Text(description='User:')
 		self.email = widgets.Text(description='Email:')
 		self.group = widgets.RadioButtons(description='Group:', options=['student', 'instructor'])
 		self.submit = widgets.Button(description="Create User")
 
 		#remove user form
-		self.user = widgets.Text(description='user:')
+		self.user = widgets.Text(description='User:')
 
 		#Change password form
-		self.user2 = widgets.Text(description='user:')
+		self.user2 = widgets.Text(description='User:')
 		self.password = widgets.Text(description='Password:')
 
 		#Form input
