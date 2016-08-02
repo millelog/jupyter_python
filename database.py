@@ -84,8 +84,8 @@ class database(object):
 		#sql command string
 		sql = """
 		DELETE FROM {tn}
-		WHERE {user} = '{user}'
-		""".format(tn=self.tn, user=self.user, user=USER)
+		WHERE {user} = '{u}'
+		""".format(tn=self.tn, user=self.user, u=USER)
 		#log the account deletion
 		with open("/srv/log.txt", "a") as log:
 			log.write(str(datetime.now())+" : deleted from database : "+USER+"\n")
