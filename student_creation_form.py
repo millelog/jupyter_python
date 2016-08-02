@@ -10,7 +10,7 @@ class student_creation_form(object):
    
     def __init__(self):
         #Instantiate master lists of all students info
-        self.info = {'first' : [], 'last' : [], 'ONID' : [], 'email' : []}
+        self.info = {'first' : [], 'last' : [], 'user' : [], 'email' : []}
 
         #Create slider widgets
         self.button = widgets.Button(description="Submit Number")
@@ -19,7 +19,7 @@ class student_creation_form(object):
         #Define dictionary to hold the widgets necessary for each student
         self.first = {}
         self.last = {}
-        self.ONID = {}
+        self.user = {}
         self.email = {}
         self.HTML = {}
         self.submit = {}
@@ -32,14 +32,14 @@ class student_creation_form(object):
         #Create the text box widgets
         self.first[i] = widgets.Text(description='First:')
         self.last[i] = widgets.Text(description='Last:')
-        self.ONID[i] = widgets.Text(description='ONID:')
+        self.user[i] = widgets.Text(description='User:')
         self.email[i] = widgets.Text(description='Email:')
         self.submit[i] = widgets.Button(description="Create Student")
         self.HTML[i] = widgets.HTML(value="<b>Student "+str(i+1)+":</b>")
 
         #Combine widgets into lists for formatting
         name = [self.first[i] , self.last[i]]
-        login = [self.ONID[i], self.email[i], self.submit[i]]
+        login = [self.user[i], self.email[i], self.submit[i]]
 
         #orient the boxes horizontally
         subcontainers = [self.HTML[i], widgets.HBox(children=name), 
@@ -54,10 +54,10 @@ class student_creation_form(object):
 
 
     #add all of the student's info to the student info dictionary
-    def append_info(self, first, last, ONID, email):
+    def append_info(self, first, last, user, email):
         self.info['first'].append(first)
         self.info['last'].append(last)
-        self.info['ONID'].append(ONID.lower())
+        self.info['user'].append(user.lower())
         self.info['email'].append(email)
 
     #Draw first form when num_students submitted
@@ -70,7 +70,7 @@ class student_creation_form(object):
     def close_form(self, i):
         self.first[i].close()
         self.last[i].close()
-        self.ONID[i].close()
+        self.user[i].close()
         self.email[i].close()
         self.submit[i].close()        
     
@@ -98,7 +98,7 @@ class student_creation_form(object):
     def valid_form(self, i):
         return self.valid_input(self.first[i].value) and\
             self.valid_input(self.last[i].value) and\
-            self.valid_input(self.ONID[i].value) and\
+            self.valid_input(self.user[i].value) and\
             self.valid_input(self.email[i].value) 
 
     #Add the list of users to the database and create their accounts
@@ -110,7 +110,7 @@ class student_creation_form(object):
         smtpserver = create.initialize_smtp_server('mail.engr.oregonstate.edu', 25, 'millelog', 'F1c2g3d4b5a')
 
         #create the users and grab the passwords that are returned
-        passwds = create.create_all_users(info['ONID'], info['email'], 
+        passwds = create.create_all_users(info['user'], info['email'], 
         smtpserver, 'student')
 
         #set the info dictionary for the database class
@@ -126,7 +126,7 @@ class student_creation_form(object):
         if(self.valid_form(self.n)):
             #append student info with text boxes
             self.append_info(self.first[self.n].value, self.last[self.n].value, 
-                        self.ONID[self.n].value, self.email[self.n].value)
+                        self.user[self.n].value, self.email[self.n].value)
             #close the current form
             self.close_form(self.n)
             #Draw their name in the closed box
