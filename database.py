@@ -84,7 +84,7 @@ class database(object):
 		#sql command string
 		sql = """
 		DELETE FROM {tn}
-		WHERE {user} = '{u}'
+		WHERE {user} = '{u}';
 		""".format(tn=self.tn, user=self.user, u=USER)
 		#log the account deletion
 		with open("/srv/log.txt", "a") as log:
@@ -98,7 +98,7 @@ class database(object):
 		self.get_connection()
 		c=self.conn.cursor()
 		users = []
-		for row in c.execute("SELECT {user} FROM {tn} WHERE {gr} = {inst}".\
+		for row in c.execute("SELECT {user} FROM {tn} WHERE {gr} = {inst};".\
 			format(user=self.user, tn = self.tn, gr = self.gr, inst = 'instructor')):
 				users.append(row)
 		return users
@@ -107,14 +107,14 @@ class database(object):
 		self.get_connection()
 		c = self.conn.cursor()
 		users = []
-		for row in c.execute("SELECT '{user}', * FROM {tn}".format(user=self.user, tn=self.tn)):
+		for row in c.execute("SELECT '{user}', * FROM {tn};".format(user=self.user, tn=self.tn)):
 			users.append(row)
 		return users
 
 	def print_db(self):
 		self.get_connection()
 		c = self.conn.cursor()
-		for row in c.execute("SELECT {id}, * FROM {tn} ORDER BY {user}".\
+		for row in c.execute("SELECT {id}, * FROM {tn} ORDER BY {user};".\
 			format(id='rowid', tn=self.tn, user=self.user)):
 			print(row)
 
