@@ -5,84 +5,55 @@ import manage_users as users
 import create_users as create
 from IPython.display import display
 from ipywidgets import *
+import ipywidgets as widgets
 
 class student_creation_form(object):
    
     def __init__(self):
         #Instantiate master lists of all students info
         self.info = {'first' : [], 'last' : [], 'user' : [], 'email' : []}
+        self.rows = list()
+        self.draw_form()
 
-        #Create slider widgets
-        self.button = widgets.Button(description="Submit Number")
-        self.students = widgets.IntSlider(min=1, max=50, step=1)
+    def logit(self, First, Last, User, Email):
+            if not (self.valid_input(First) or self.valid_input(Last) or self.valid_input(User) or self.valid_input(Email)):
+                for row in self.rows:
+                    if(First == row.children[0].value and\
+                      Last == row.children[1].value and\
+                      User == row.children[2].value and\
+                      Email == row.children[3].value):
+                        row.layout.border='4px solid red'
 
-        #Define dictionary to hold the widgets necessary for each student
-        self.first = {}
-        self.last = {}
-        self.user = {}
-        self.email = {}
-        self.HTML = {}
-        self.submit = {}
-        self.n = 0
+    def get_user_hbox(self):
+        b = widgets.HBox(width = "100%")
+        boxes = list()
+        y = interactive(self.logit, First = "", Last = "", User="", Email="")
+        y.children[0].layout.width = '15%'
+        y.children[0].layout.margin = '4px 30px 4px 20px'
+        y.children[1].layout.width = '15%'
+        y.children[1].layout.margin = '4px 30px 4px 20px'
+        y.children[2].layout.width = '20%'
+        y.children[2].layout.margin = '4px 30px 4px 20px'
+        y.children[3].layout.width = '40%'
+        y.children[3].layout.margin = '4px 30px 4px 20px'
+        boxes.extend(y.children)
 
-        #draw the table
-        self.draw_initial_slider();
-        
-    def draw_form(self, i):
-        #Create the text box widgets
-        self.first[i] = widgets.Text(description='First:')
-        self.last[i] = widgets.Text(description='Last:')
-        self.user[i] = widgets.Text(description='User:')
-        self.email[i] = widgets.Text(description='Email:')
-        self.submit[i] = widgets.Button(description="Create Student")
-        self.HTML[i] = widgets.HTML(value="<b>Student "+str(i+1)+":</b>")
+        b.children = [b for b in boxes]
+        return b
 
-        #Combine widgets into lists for formatting
-        name = [self.first[i] , self.last[i]]
-        login = [self.user[i], self.email[i], self.submit[i]]
-
-        #orient the boxes horizontally
-        subcontainers = [self.HTML[i], widgets.HBox(children=name), 
-                         widgets.HBox(children=login)]
-
-        #Contain all of these widgets into one box and format
-        student_info = widgets.Box(children = subcontainers)
-        #student_info.layout.border = '2px grey solid'
-        display(student_info)
-
-        self.submit[i].on_click(self.on_submit_clicked)
+    def new_row(self, b):
+        newrow = self.get_user_hbox()
+        self.rows.append(newrow)
+        display(newrow)
 
 
-    #add all of the student's info to the student info dictionary
-    def append_info(self, first, last, user, email):
-        self.info['first'].append(first)
-        self.info['last'].append(last)
-        self.info['user'].append(user.lower())
-        self.info['email'].append(email)
-
-    #Draw first form when num_students submitted
-    def on_button_clicked(self, b):
-        self.students.close()
-        self.button.close()
-        self.draw_form(self.n)
-        
-    #close all of the widgets associated with taking input for student i
-    def close_form(self, i):
-        self.first[i].close()
-        self.last[i].close()
-        self.user[i].close()
-        self.email[i].close()
-        self.submit[i].close()        
-    
-    #Draw the initial slider that gets number of students    
-    def draw_initial_slider(self):
-        #Display the initial slider
-        display(widgets.HTML(value="<b>Number of Students:</b>"))
-        display(self.students)
-        display(self.button)
-        
-        #Listen for button clicks
-        self.button.on_click(self.on_button_clicked)
+    def draw_form(self):
+        bt = widgets.Button(description = "New Student", button_style='primary')
+        submit = widgets.Button(description = "Submit Students", button_style='success')
+        submit.on_click(self.on_submit_clicked)
+        bt.on_click(self.new_row)
+        buttons = widgets.HBox(children=[bt, submit])
+        display(buttons)
 
     #Input validator to protect from sql injection
     def valid_input(self, input_string):
@@ -93,13 +64,6 @@ class student_creation_form(object):
         if not input_string:
             return False
         return True
-
-    #Check if the current form are all valid input strings
-    def valid_form(self, i):
-        return self.valid_input(self.first[i].value) and\
-            self.valid_input(self.last[i].value) and\
-            self.valid_input(self.user[i].value) and\
-            self.valid_input(self.email[i].value) 
 
     #Add the list of users to the database and create their accounts
     def add_users(self, info):
@@ -120,30 +84,26 @@ class student_creation_form(object):
         db.insert_info()
         print("All students created succesfully")
 
-
-    #Define the button's functionality
+    def valid_form(self):
+        for row in form.rows:
+            if(not (self.valid_input(row.children[0].value) and\
+              self.valid_input(row.children[1].value) and\
+              self.valid_input(row.children[2].value) and\
+              self.valid_input(row.children[3].value))):
+                return False;
+            if not (row.children[0] or row.children[1] or\
+                    row.children[2] or row.children[3]):
+                return False;
+        return True
+    
     def on_submit_clicked(self, b):
-        if(self.valid_form(self.n)):
-            #append student info with text boxes
-            self.append_info(self.first[self.n].value, self.last[self.n].value, 
-                        self.user[self.n].value, self.email[self.n].value)
-            #close the current form
-            self.close_form(self.n)
-            #Draw their name in the closed box
-            self.HTML[self.n].value = "<b>Student "+str(self.n+1)+": "+self.info['first'][self.n]+" "+self.info['last'][self.n]+"</b>"
-            #if student number is less than number of students
-            if(self.n<self.students.value-1):
-                #draw the next student's form
-                self.n+=1
-                self.draw_form(self.n)
-            else:
-                print("Form correctly submitted")
-                self.add_users(self.info)
+        if(valid_form()):
+            for row in self.form.rows:
+                self.info['first'].append(row.children[0].value)
+                self.info['last'].append(row.children[1].value)
+                self.info['user'].append(row.children[2].value)  
+                self.info['email'].append(row.children[3].value)
+                print("Form is properly formatted")
+            self.add_users(self.info)
         else:
-            #If one of the fields are invalid
-            print('Invalid input in one or multiple fields. Please try again.')
-            #Close all widgets
-            self.close_form(self.n)
-            self.HTML[self.n].close()
-            #Redraw current student
-            self.draw_form(self.n)
+            print("Invalid character(s) used in the highlighted student")
