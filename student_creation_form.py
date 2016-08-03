@@ -97,7 +97,7 @@ class student_creation_form(object):
         return True
     
     def on_submit_clicked(self, b):
-        if(valid_form()):
+        if(self.valid_form()):
             for row in self.form.rows:
                 self.info['first'].append(row.children[0].value)
                 self.info['last'].append(row.children[1].value)
