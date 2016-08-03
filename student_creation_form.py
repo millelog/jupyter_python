@@ -16,13 +16,20 @@ class student_creation_form(object):
         self.draw_form()
 
     def logit(self, First, Last, User, Email):
-            if not (self.valid_input(First) or self.valid_input(Last) or self.valid_input(User) or self.valid_input(Email)):
+            if not (self.valid_input(First) and self.valid_input(Last) and self.valid_input(User) and self.valid_input(Email)):
                 for row in self.rows:
                     if(First == row.children[0].value and\
                       Last == row.children[1].value and\
                       User == row.children[2].value and\
                       Email == row.children[3].value):
-                        row.layout.border='4px solid red'
+                        row.layout.border='3px solid red'
+            else:
+                for row in self.rows:
+                    if(First == row.children[0].value and\
+                      Last == row.children[1].value and\
+                      User == row.children[2].value and\
+                      Email == row.children[3].value):
+                        row.layout.border=''
 
     def get_user_hbox(self):
         b = widgets.HBox(width = "100%")
@@ -61,8 +68,6 @@ class student_creation_form(object):
         for char in input_string:
             if char not in valid_string:
                 return False
-        if not input_string:
-            return False
         return True
 
     #Add the list of users to the database and create their accounts
