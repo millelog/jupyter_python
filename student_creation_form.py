@@ -90,7 +90,7 @@ class student_creation_form(object):
         print("All students created succesfully")
 
     def valid_form(self):
-        for row in form.rows:
+        for row in self.form.rows:
             if(not (self.valid_input(row.children[0].value) and\
               self.valid_input(row.children[1].value) and\
               self.valid_input(row.children[2].value) and\
