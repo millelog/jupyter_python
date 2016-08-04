@@ -11,7 +11,7 @@ class student_creation_form(object):
    
     def __init__(self):
         #Instantiate master lists of all students info
-        self.info = {'first' : [], 'last' : [], 'user' : [], 'email' : []}
+        self.info = {'first' : [], 'last' : [], 'USER' : [], 'email' : []}
         self.rows = list()
         self.submit = widgets.Button(description = "Submit Students", button_style='success')
         self.header = widgets.HTML(value="<b>Add a new student or submit the current list of students</b>")
@@ -88,7 +88,7 @@ class student_creation_form(object):
         smtpserver = create.initialize_smtp_server('mail.engr.oregonstate.edu', 25, 'millelog', 'F1c2g3d4b5a')
 
         #create the users and grab the passwords that are returned
-        passwds = create.create_all_users(info['user'], info['email'], 
+        passwds = create.create_all_users(info['USER'], info['email'], 
         smtpserver, 'student')
 
         #set the info dictionary for the database class
