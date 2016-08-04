@@ -96,7 +96,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
 	#Create the user and set their default group
 	subprocess.check_output(["useradd","-m", "-g", group, user])
 	#Set their password
-	subprocess.check_output(["/home/jupyter_python/passwd.exp", user, passwd])
+	subprocess.check_output(["/home/public/data/jupyter_python/passwd.exp", user, passwd])
     	#If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group_root('student', user);
