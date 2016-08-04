@@ -115,7 +115,7 @@ class student_creation_form(object):
             for row in self.rows:
                 self.info['first'].append(row.children[0].value)
                 self.info['last'].append(row.children[1].value)
-                self.info['user'].append(row.children[2].value)  
+                self.info['USER'].append(row.children[2].value)  
                 self.info['email'].append(row.children[3].value)
             self.add_users(self.info)
         else:
