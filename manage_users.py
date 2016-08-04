@@ -38,9 +38,9 @@ def remove_user(USER, db, root=False):
 
 def set_custom_password(USER, passwd, db, root=False):
 	if root:
-		subprocess.check_output(["/home/jupyter_python/passwd.exp", USER, passwd])
+		subprocess.check_output(["/home/public/data/jupyter_python/passwd.exp", USER, passwd])
 	else:
-		subprocess.check_output(["sudo","/home/jupyter_python/passwd.exp", USER, passwd])
+		subprocess.check_output(["sudo","/home/public/data/jupyter_python/passwd.exp", USER, passwd])
 	print("Password for "+USER+" was changed succesfully")
 	with open("/srv/log.txt", "a") as log:
 		log.write(str(datetime.now())+" : default password set to custom : USER-"+USER)
