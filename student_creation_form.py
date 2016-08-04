@@ -36,6 +36,21 @@ class student_creation_form(object):
                         row.layout.border=''
                         self.header.value="<b>Add a new student or submit the current list of students</b>"
 
+    def replace_apostrophe(self, s):
+        string = ''
+        for i in range(len(s)):
+            if s[i] == '\'':
+                string+= '\"'
+            else:
+                string+=s[i]
+        return string
+
+    def replace_all_apostrophes(self):
+        for row in self.rows:
+            row.children[0].value = self.replace_apostrophe(row.children[0].value)
+            row.children[1].value = self.replace_apostrophe(row.children[1].value)
+            row.children[2].value = self.replace_apostrophe(row.children[2].value)
+            row.children[3].value = self.replace_apostrophe(row.children[3].value)
     def get_user_hbox(self):
         b = widgets.HBox(width = "100%")
         boxes = list()
@@ -112,6 +127,7 @@ class student_creation_form(object):
     
     def on_submit_clicked(self, b):
         if(self.valid_form()):
+            self.replace_all_apostrophes()
             for row in self.rows:
                 self.info['first'].append(row.children[0].value)
                 self.info['last'].append(row.children[1].value)
