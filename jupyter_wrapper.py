@@ -1,4 +1,5 @@
 from __future__ import print_function
+import student_creation_form as form
 import manage_users as users
 from IPython.display import display
 from ipywidgets import *
@@ -6,105 +7,126 @@ from ipywidgets import *
 class jupyter_wrapper(object):
 
 	def __init__(self):
-		#tab submit buttons         
-		self.add_students = widgets.Button(description="Add list of students")
-		self.add_user = widgets.Button(description="Add user")
-		self.remove_user = widgets.Button(description="Remove user")
-		self.set_pass = widgets.Button(description="Set password")
-		self.print_db = widgets.Button(description="Print user database")
-		#Individual user form
-		self.first = widgets.Text(description='First:')
-		self.last = widgets.Text(description='Last:')
-		self.user = widgets.Text(description='User:')
-		self.email = widgets.Text(description='Email:')
-		self.group = widgets.RadioButtons(description='Group:', options=['student', 'instructor'])
-		self.submit = widgets.Button(description="Create User")
+		self.add_user = create_add_user()
+		self.remove_user = self.create_remove_user()
+		self.change_password = self.create_change_password()
+		self.print_database = self.create_print_database()
 
-		#remove user form
-		self.user = widgets.Text(description='User:')
+	def create_add_user(self):
+		b = widgets.Box(width="100%")      
+		rows = [None] * 4
+		rows[0] = widgets.HTML(value="<u><b>User Creation:</b></u>")
+		name = [widgets.Text(description='First:'), widgets.Text(description='Last:')]
+		rows[1] = widgets.HBox(children=name)
+		user = [widgets.Text(description='User:'), widgets.Text(description='Email:')]
+		rows[2] = widgets.HBox(children=user)
+		rows[3] = widgets.HBox(children = [widgets.RadioButtons(description='Group:', options=['Student', 'Instructor']),
+			widgets.Button(description='Create User', button_style='success')])
+		b.children = [r for r in rows]
+		b.children[3].children[1].layout.margin='10px 0px 0px 250px'
+		return b
 
-		#Change password form
-		self.user2 = widgets.Text(description='User:')
-		self.password = widgets.Text(description='Password:')
+	def create_remove_user(self):
+		b = widgets.Box(width="100%")      
+		rows = [None] * 2
+		rows[0] = widgets.HTML(value="<u><b>User Deletion:</b></u>")
+		d = [widgets.Text(description='User:'), widgets.Button(description='Delete User', button_style = 'danger')]
+		rows[1] = widgets.HBox(children=d)
+		b.children = [r for r in rows]
+		b.children[1].children[0].layout.margin = '0px 25px 0px 0px'
+		return b
 
-		#Form input
-		#Combine widgets into lists for formatting
-		name = [self.first , self.last]
-		login = [self.user, self.email]
-		group = [self.group, self.submit]
+	def create_change_password(self):
+		b = widgets.Box(width="100%")
+		rows = [None] * 3
+		rows[0] = [widgets.HTML(value="<u><b>Change Password:</b></u>")]
+		rows[1] = widgets.Text(description='User:')
+		p = [widgets.Text(description='Pass:'), widgets.Button(description='Set Password', button_style='primary')]
+		rows[2] = widgets.HBox(children=p)
+		b.children = [r for r in rows]
+		b.children[2].children[0].layout.margin = '0px 25px 0px 0px'
+		return b
 
-		#orient the boxes horizontally
-		subcontainers = [widgets.HBox(children=name), 
-						 widgets.HBox(children=login),
-						 widgets.HBox(children=group)]
+	def create_print_database(self):
+		return None
 
-		#Contain all of these widgets into one box and format
-		self.page1 = widgets.Box(children = [self.add_students])
-		self.page2 = widgets.Box(children = subcontainers)
-		self.page3 = widgets.Box(children = [self.user, self.remove_user])
-		self.page4 = widgets.Box(children = [self.user2, self.password, self.set_pass])
-		self.page5 = widgets.Box(children = [self.print_db])
-
-
-		self.draw_pages()
-
-	def on_form_clicked(self, b):
-		users.create_form()
-        
-	def replace_apostrophe(self, s):
-		string = ''
-		for i in range(len(s)):
-			if s[i] == '\'':
-				string+= '\"'
-			else:
-				string+=s[i]
-		return string
-        
-	def on_submit_clicked(self, b):
-		if users.valid_input(self.first.value) and\
-		users.valid_input(self.last.value) and\
-		users.valid_input(self.user.value) and\
-		users.valid_input(self.email.value):
-			print('Loading...')
-			users.add_user(self.replace_apostrophe(self.first.value), self.replace_apostrophe(self.last.value), self.user.value,
-				self.replace_apostrophe(self.email.value), self.group.value, users.create_database())
+	def verify_form(self):
+		valid = True
+		#First name
+		if not users.valid_input(self.add_user.children[1].children[0].value):
+			self.add_user.children[1].children[0].layout.border='3px solid red'
+			valid = False
 		else:
-			print('Invalid input(s). Please only use valid characters.')
-			self.first.value=self.last.value=self.user.value=self.email.value=""
+			self.add_user.children[1].children[0].layout.border=''
+		#Last name
+		if not users.valid_input(self.add_user.children[1].children[1].value):
+			self.add_user.children[1].children[1].layout.border='3px solid red'
+			valid = False
+		else:
+			self.add_user.children[1].children[1].layout.border=''
+		#Username
+		if not users.valid_input(self.add_user.children[2].children[0].value):
+			self.add_user.children[2].children[0].layout.border='3px solid red'
+			valid = False
+		else:
+			self.add_user.children[2].children[0].layout.border=''
+		#Email
+		if not users.valid_input(self.add_user.children[2].children[1].value):
+			self.add_user.children[2].children[1].layout.border='3px solid red'
+			valid = False
+		else:
+			self.add_user.children[2].children[1].layout.border=''
+		return valid
 
-	def draw_input_box(self):
-		display(user_info)
+	def on_submit_clicked(self):
+		if(self.verify_form()):
+			self.add_user.children[0].value = "<u><b>User Creation:</b></u>"
+			users.add_user(self.add_user.children[1].children[0].value,
+				self.add_user.children[1].children[1].value,
+				self.add_user.children[2].children[0].value,
+				self.add_user.children[2].children[1].value,
+				self.add_user.children[3].children[0].value.lower(),
+				users.create_database())
+		else:
+			self.add_user.children[0].value = "<u><b>User Creation:</b></u>            <b><font color=\"red\">Invalid Character(s) in the Highlighted Field(s)</font></b>"
 
-	def on_add_clicked(self, b):
-		print('Loading...')
-		self.draw_input_box()
 
 	def on_remove_clicked(self, b):
-		print('Loading...')
-		users.remove_user(self.user.value, users.create_database())
+		db = users.create_database()
+		user = self.remove_user.children[1].children[0].value
+		if(users.valid_input(user)):
+			self.remove_user.children[0].value="<b>User Deletion:</b>"
+			if(user in db.get_users()):
+				users.remove_user(self.remove_user.children[1].children[0].value, db)
+			else:
+				self.remove_user.children[0].value="<b>User Deletion: <font color=\"red\">Username not found in database</font></b>"
+		else:
+			self.remove_user.children[0].value="<b>User Deletion: <font color=\"red\">Invalid Character(s)</font></b>"
 
 	def on_pass_clicked(self, b):
-		print('Loading...')
-		users.set_custom_password(self.user2.value, self.password.value, users.create_database())
+		#First para is user second is password
+		users.set_custom_password(self.change_password.children[1].value, 
+			self.change_password.children[2].children[0].value, 
+			users.create_database())
         
 	def on_print_clicked(self, b):
 		db = users.create_database()
 		db.print_db()
 
-	def draw_pages(self):
-		tabs = widgets.Tab(children = [self.page1, self.page2, self.page3, self.page4, self.page5])
-		display(tabs)
+	def draw_input_form(self):
+		form.student_creation_form()
 
-		tabs.set_title(0, 'Student List Input')
-		tabs.set_title(1, 'Add User')
-		tabs.set_title(2, 'Remove User')
-		tabs.set_title(3, 'Change Password')
-		tabs.set_title(4, 'Print User Database')
+	def draw_user_creation(self):
+		display(self.add_user)
+		self.add_user.children[3].children[1].on_click(self.on_submit_clicked)
 
-		self.submit.on_click(self.on_submit_clicked)
-		self.add_students.on_click(self.on_form_clicked)
-		self.add_user.on_click(self.on_add_clicked)
-		self.remove_user.on_click(self.on_remove_clicked)
-		self.set_pass.on_click(self.on_pass_clicked)
-		self.print_db.on_click(self.on_print_clicked)
+	def draw_user_deletion(self):
+		display(self.remove_user)
+		self.remove_user.children[1].children[1].on_click(self.on_remove_clicked)
 
+	def draw_change_password(self):
+		display(self.change_password)
+		self.change_password.children[2].children[1].on_click(self.on_pass_clicked)
+
+	def print_db(self):
+		display(self.print_database)
