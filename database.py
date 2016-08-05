@@ -48,8 +48,8 @@ class database(object):
 				log.write(str(datetime.now())+" : added to database : "+self.info['USER'][i]+" "+self.info['pass'][i]\
 					+" "+self.info['first'][i]+" "+self.info['last'][i]+" "+self.info['group'][i]+" "+self.info['email'][i]+"\n")
 			log.close()
-			
-    	def replace_apostrophe(self, s):
+	
+	def replace_apostrophe(self, s):
 		string = ''
 		for i in range(len(s)):
 			if s[i] == '\'':
