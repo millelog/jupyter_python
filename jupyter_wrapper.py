@@ -7,7 +7,7 @@ from ipywidgets import *
 class jupyter_wrapper(object):
 
 	def __init__(self):
-		self.add_user = create_add_user()
+		self.add_user = self.create_add_user()
 		self.remove_user = self.create_remove_user()
 		self.change_password = self.create_change_password()
 		self.print_database = self.create_print_database()
