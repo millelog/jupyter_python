@@ -15,7 +15,7 @@ class jupyter_wrapper(object):
 	def create_add_user(self):
 		b = widgets.Box(width="100%")      
 		rows = [None] * 4
-		rows[0] = widgets.HTML(value="<u><b>User Creation:</b></u>")
+		rows[0] = widgets.HTML(value="<b>User Creation:</b>")
 		name = [widgets.Text(description='First:'), widgets.Text(description='Last:')]
 		rows[1] = widgets.HBox(children=name)
 		user = [widgets.Text(description='User:'), widgets.Text(description='Email:')]
@@ -29,7 +29,7 @@ class jupyter_wrapper(object):
 	def create_remove_user(self):
 		b = widgets.Box(width="100%")      
 		rows = [None] * 2
-		rows[0] = widgets.HTML(value="<u><b>User Deletion:</b></u>")
+		rows[0] = widgets.HTML(value="<b>User Deletion:</b>")
 		d = [widgets.Text(description='User:'), widgets.Button(description='Delete User', button_style = 'danger')]
 		rows[1] = widgets.HBox(children=d)
 		b.children = [r for r in rows]
@@ -39,7 +39,7 @@ class jupyter_wrapper(object):
 	def create_change_password(self):
 		b = widgets.Box(width="100%")
 		rows = [None] * 3
-		rows[0] = [widgets.HTML(value="<u><b>Change Password:</b></u>")]
+		rows[0] = [widgets.HTML(value="<b>Change Password:</b>")]
 		rows[1] = widgets.Text(description='User:')
 		p = [widgets.Text(description='Pass:'), widgets.Button(description='Set Password', button_style='primary')]
 		rows[2] = widgets.HBox(children=p)
@@ -78,9 +78,9 @@ class jupyter_wrapper(object):
 			self.add_user.children[2].children[1].layout.border=''
 		return valid
 
-	def on_submit_clicked(self):
+	def on_submit_clicked(self, b):
 		if(self.verify_form()):
-			self.add_user.children[0].value = "<u><b>User Creation:</b></u>"
+			self.add_user.children[0].value = "<b>User Creation:</b>"
 			users.add_user(self.add_user.children[1].children[0].value,
 				self.add_user.children[1].children[1].value,
 				self.add_user.children[2].children[0].value,
@@ -88,7 +88,7 @@ class jupyter_wrapper(object):
 				self.add_user.children[3].children[0].value.lower(),
 				users.create_database())
 		else:
-			self.add_user.children[0].value = "<u><b>User Creation:</b></u>            <b><font color=\"red\">Invalid Character(s) in the Highlighted Field(s)</font></b>"
+			self.add_user.children[0].value = "<b>User Creation:</b>            <b><font color=\"red\">Invalid Character(s) in the Highlighted Field(s)</font></b>"
 
 
 	def on_remove_clicked(self, b):
