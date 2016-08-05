@@ -113,7 +113,6 @@ class student_creation_form(object):
     
     def on_submit_clicked(self, b):
         if(self.valid_form()):
-            self.replace_all_apostrophes()
             for row in self.rows:
                 self.info['first'].append(row.children[0].value)
                 self.info['last'].append(row.children[1].value)
