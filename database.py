@@ -51,17 +51,17 @@ class database(object):
 			
     	def replace_apostrophe(self, s):
 		string = ''
-        	for i in range(len(s)):
-        	    if s[i] == '\'':
-        	        string+= '\"'
-        	    else:
-        	        string+=s[i]
-        	return string
+		for i in range(len(s)):
+			if s[i] == '\'':
+				string+= '\"'
+			else:
+				string+=s[i]
+		return string
 
-    	def replace_all_apostrophes(self):
-    		for array in self.info:
-    			for i in range(len(self.info[array])):
-    				self.info[array][i] = self.replace_apostrophe(self.info[array][i])
+	def replace_all_apostrophes(self):
+		for array in self.info:
+			for i in range(len(self.info[array])):
+				self.info[array][i] = self.replace_apostrophe(self.info[array][i])
             
 	def insert_info(self):
 		"""Insert all of the information from the info dictionary into the sql database"""
