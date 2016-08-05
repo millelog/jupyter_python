@@ -122,7 +122,7 @@ class database(object):
 		self.get_connection()
 		c = self.conn.cursor()
 		users = []
-		for row in c.execute("SELECT '{user}', * FROM {tn};".format(user=self.user, tn=self.tn)):
+		for row in c.execute("SELECT '{user}' FROM {tn};".format(user=self.user, tn=self.tn)):
 			users.append(row)
 		return users
 
