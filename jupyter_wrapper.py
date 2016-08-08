@@ -39,7 +39,7 @@ class jupyter_wrapper(object):
 	def create_change_password(self):
 		b = widgets.Box(width="100%")
 		rows = [None] * 3
-		rows[0] = [widgets.HTML(value="<b>Change Password:</b>")]
+		rows[0] = widgets.HTML(value="<b>Change Password:</b>")
 		rows[1] = widgets.Text(description='User:')
 		p = [widgets.Text(description='Pass:'), widgets.Button(description='Set Password', button_style='primary')]
 		rows[2] = widgets.HBox(children=p)
