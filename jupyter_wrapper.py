@@ -48,7 +48,7 @@ class jupyter_wrapper(object):
 		return b
 
 	def create_print_database(self):
-		return None
+		return widgets.Button(description='Print Database', button_style='primary')
 
 	def verify_form(self):
 		valid = True
@@ -78,6 +78,13 @@ class jupyter_wrapper(object):
 			self.add_user.children[2].children[1].layout.border=''
 		return valid
 
+	def successful_creation(self):
+		self.add_user.children[1].children[0].value=''
+		self.add_user.children[1].children[1].value=''
+		self.add_user.children[2].children[0].value=''
+		self.add_user.children[2].children[1].value=''
+		self.add_user.children[1].children[0].value = "<b>User Creation: </b>"+self.add_user.children[1].children[0]" was created successfully"
+
 	def on_submit_clicked(self, b):
 		if(self.verify_form()):
 			self.add_user.children[0].value = "<b>User Creation:</b>"
@@ -87,6 +94,7 @@ class jupyter_wrapper(object):
 				self.add_user.children[2].children[1].value,
 				self.add_user.children[3].children[0].value.lower(),
 				users.create_database())
+			self.successful_creation()
 		else:
 			self.add_user.children[0].value = "<b>User Creation:</b>            <b><font color=\"red\">Invalid Character(s) in the Highlighted Field(s)</font></b>"
 
@@ -97,17 +105,35 @@ class jupyter_wrapper(object):
 		if(users.valid_input(user)):
 			self.remove_user.children[0].value="<b>User Deletion:</b>"
 			if(user in db.get_users()):
+				#remove user
 				users.remove_user(self.remove_user.children[1].children[0].value, db)
+				#Reset the fields to blank
+				self.remove_user.children[1].children[0].value = ''
+				#Success message
+				self.remove_user.children[0].value="<b>User Deletion: </b>"+user" was deleted successfully"
 			else:
+				#User not found in database
 				self.remove_user.children[0].value="<b>User Deletion: <font color=\"red\">Username not found in database</font></b>"
 		else:
+			#Invalid characters in form
 			self.remove_user.children[0].value="<b>User Deletion: <font color=\"red\">Invalid Character(s)</font></b>"
 
 	def on_pass_clicked(self, b):
 		#First para is user second is password
-		users.set_custom_password(self.change_password.children[1].value, 
-			self.change_password.children[2].children[0].value, 
-			users.create_database())
+		db = users.create_database()
+		#If the user is in the database
+		if(self.change_password.children[1].value in db.get_users()):
+			#set password
+			users.set_custom_password(self.change_password.children[1].value, 
+				self.change_password.children[2].children[0].value, db)
+			#Reset fields
+			self.change_password.children[1].value = ''
+			self.change_password.children[2].children[0].value = ''
+			#Success message
+			self.change_password.children[0].value = "<b>Change Password: </b>"+self.change_password.children[1].value+" was deleted successfully"
+		else:
+			self.change_password.children[0].value = "<b>Change Password: <font color=\"red\">Username not found in database</font></b>"
+			#user not found in database
         
 	def on_print_clicked(self, b):
 		db = users.create_database()
@@ -130,3 +156,4 @@ class jupyter_wrapper(object):
 
 	def print_db(self):
 		display(self.print_database)
+		self.print_database.on_click(self.on_print_clicked)
