@@ -83,7 +83,7 @@ class jupyter_wrapper(object):
 		self.add_user.children[1].children[1].value=''
 		self.add_user.children[2].children[0].value=''
 		self.add_user.children[2].children[1].value=''
-		self.add_user.children[1].children[0].value = "<b>User Creation: </b>"+self.add_user.children[1].children[0]+" was created successfully"
+		self.add_user.children[1].children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0]
 
 	def on_submit_clicked(self, b):
 		if(self.verify_form()):
@@ -110,7 +110,7 @@ class jupyter_wrapper(object):
 				#Reset the fields to blank
 				self.remove_user.children[1].children[0].value = ''
 				#Success message
-				self.remove_user.children[0].value="<b>User Deletion: </b>"+user" was deleted successfully"
+				self.remove_user.children[0].value="<b>User Deletion: {user} was deleted successfully</b>".format(user=user)
 			else:
 				#User not found in database
 				self.remove_user.children[0].value="<b>User Deletion: <font color=\"red\">Username not found in database</font></b>"
@@ -130,7 +130,7 @@ class jupyter_wrapper(object):
 			self.change_password.children[1].value = ''
 			self.change_password.children[2].children[0].value = ''
 			#Success message
-			self.change_password.children[0].value = "<b>Change Password: </b>"+self.change_password.children[1].value+" was deleted successfully"
+			self.change_password.children[0].value = "<b>Change Password: {name} was deleted successfully</b>".format(name=self.change_password.children[1].value)
 		else:
 			self.change_password.children[0].value = "<b>Change Password: <font color=\"red\">Username not found in database</font></b>"
 			#user not found in database
