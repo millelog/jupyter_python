@@ -96,17 +96,14 @@ class database(object):
 		self.get_connection()
 		c = self.conn.cursor()
 		#sql command string
-		sql = """
-		DELETE FROM {tn}
-		WHERE {user} = '{u}';
-		""".format(tn=self.tn, user=self.user, u=USER)
+		sql = "DELETE FROM {tn} WHERE {user} = '{u}';".format(tn=self.tn, user=self.user, u=USER)
+		#Execute the command and commit it to the database
+		c.execute(sql)
+		self.commit_db()
 		#log the account deletion
 		with open("/srv/log.txt", "a") as log:
 			log.write(str(datetime.now())+" : deleted from database : "+USER+"\n")
 			log.close()
-		#Execute the command and commit it to the database
-		c.execute(sql)
-		self.commit_db()
 
 	def get_instructors(self):
 		self.get_connection()
