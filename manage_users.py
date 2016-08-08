@@ -26,7 +26,6 @@ def add_user(first, last, user, email, group, db, root=False):
 	db.set_info(info, group, [passwd])
 	db.insert_info()
 
-	print(user+' has been created sucesfully')
 
 def remove_user(USER, db, root=False):
 	db.remove_user(USER)
@@ -34,16 +33,15 @@ def remove_user(USER, db, root=False):
 		subprocess.check_output(["userdel", "-r", USER])
 	else:
 		subprocess.check_output(["sudo", "userdel", "-r", USER])
-	print(USER+' has been deleted succesfully')
 
 def set_custom_password(USER, passwd, db, root=False):
 	if root:
 		subprocess.check_output(["/home/public/data/jupyter_python/passwd.exp", USER, passwd])
 	else:
 		subprocess.check_output(["sudo","/home/public/data/jupyter_python/passwd.exp", USER, passwd])
-	print("Password for "+USER+" was changed succesfully")
+
 	with open("/srv/log.txt", "a") as log:
-		log.write(str(datetime.now())+" : default password set to custom : USER-"+USER)
+		log.write(str(datetime.now())+" : default password set to custom : "+USER)
 
 def create_form():
 	#display the table
