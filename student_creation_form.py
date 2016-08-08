@@ -22,12 +22,12 @@ class student_creation_form(object):
     def logit(self, First, Last, User, Email):
             if not (self.valid_input(First) and self.valid_input(Last) and self.valid_input(User) and self.valid_input(Email)):
                 for row in self.rows:
-                     if(is_row(First, Last, User, Email, row)):
+                     if(self.is_row(First, Last, User, Email, row)):
                         row.layout.border='3px solid red'
                         self.header.value="<b><font color=\"red\">Invalid character on the highlighted row</font></b>"
             else:
                for row in self.rows:
-                  if(is_row(First, Last, User, Email, row)):
+                  if(self.is_row(First, Last, User, Email, row)):
                      row.layout.border=''
                      self.header.value="<b>Add a new student or submit the current list of students</b>"
             if User in self.db.get_users():
@@ -37,7 +37,7 @@ class student_creation_form(object):
                      self.header.value="<b><font color=\"red\">Highlighted user already exists in the database</font></b>"
             else:
                for row in self.rows:
-                  if(is_row(First, Last, User, Email, row)):
+                  if(self.is_row(First, Last, User, Email, row)):
                         row.layout.border=''
                         self.header.value="<b>Add a new student or submit the current list of students</b>" 
                         
