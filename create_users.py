@@ -86,7 +86,7 @@ def send_new_user_email(email, user, passwd, smtpserver):
 		send_instructor_email(instructor_email, [user], [passwd], [email], smtpserver)
 		
 def copy_instructor_interface(user):
-	subprocess.check_output(["sudo","cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
+	subprocess.check_output(["sudo","cp","/home/public/data/jupyter_python/Instructor_Panel.ipynb","/home/"+user])
 
 def add_instructor_email(email):
 	with open("/srv/cgrb/instructor_email.txt", "a") as file:
@@ -100,7 +100,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
     	#If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group_root('student', user);
-		subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
+		subprocess.check_output(["cp","/home/public/data/jupyter_python/Instructor_Panel.ipynb","/home/"+user])
 		add_instructor_email(email);
         
 	#set all file permissions
