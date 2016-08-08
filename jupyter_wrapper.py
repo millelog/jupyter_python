@@ -11,6 +11,7 @@ class jupyter_wrapper(object):
 		self.remove_user = self.create_remove_user()
 		self.change_password = self.create_change_password()
 		self.print_database = self.create_print_database()
+		self.has_run = False
 
 	def create_add_user(self):
 		b = widgets.Box(width="100%")      
@@ -98,7 +99,7 @@ class jupyter_wrapper(object):
 					db)
 				self.successful_creation()
 			else:
-				self.add_user.children[0].value = "<b>User Creation:</b><b><font color=\"red\">User already exists in the database</font></b>"	
+				self.add_user.children[0].value = "<b>User Creation:<font color=\"red\"> User already exists in the database</font></b>"	
 		else:
 			self.add_user.children[0].value = "<b>User Creation:</b>            <b><font color=\"red\">Invalid Character(s) in the Highlighted Field(s)</font></b>"
 
@@ -134,7 +135,7 @@ class jupyter_wrapper(object):
 			self.change_password.children[1].value = ''
 			self.change_password.children[2].children[0].value = ''
 			#Success message
-			self.change_password.children[0].value = "<b>Change Password: {name} was deleted successfully</b>".format(name=self.change_password.children[1].value)
+			self.change_password.children[0].value = "<b>Change Password: {name}'s password changed</b>".format(name=self.change_password.children[1].value)
 		else:
 			self.change_password.children[0].value = "<b>Change Password: <font color=\"red\">Username not found in database</font></b>"
 			#user not found in database
@@ -159,5 +160,6 @@ class jupyter_wrapper(object):
 		self.change_password.children[2].children[1].on_click(self.on_pass_clicked)
 
 	def print_db(self):
+		self.has_run = True
 		display(self.print_database)
 		self.print_database.on_click(self.on_print_clicked)
