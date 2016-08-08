@@ -111,18 +111,18 @@ class database(object):
 	def get_instructors(self):
 		self.get_connection()
 		c=self.conn.cursor()
-		users = []
+		instructors = []
 		for row in c.execute("SELECT {user} FROM {tn} WHERE {gr} = {inst};".\
-			format(user=self.user, tn = self.tn, gr = self.gr, inst = 'instructor')):
-				users.append(row)
-		return users
+			format(user=self.user, tn = self.tn, gr = self.g, inst = 'instructor')):
+				users.append(row[0])
+		return instructors
 		
 	def get_users(self):
 		self.get_connection()
 		c = self.conn.cursor()
 		users = []
 		for row in c.execute("SELECT {user} FROM {tn};".format(user=self.user, tn=self.tn)):
-			users.append(row)
+			users.append(row[0])
 		return users
 
 	def print_db(self):
