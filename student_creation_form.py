@@ -41,7 +41,7 @@ class student_creation_form(object):
                         row.layout.border=''
                         self.header.value="<b>Add a new student or submit the current list of students</b>" 
                         
-    def is_row(self, first, last, user, email, row):
+    def is_row(self, First, Last, User, Email, row):
          return First == row.children[0].value and\
          Last == row.children[1].value and\
          User == row.children[2].value and\
