@@ -83,7 +83,7 @@ class jupyter_wrapper(object):
 		self.add_user.children[1].children[1].value=''
 		self.add_user.children[2].children[0].value=''
 		self.add_user.children[2].children[1].value=''
-		self.add_user.children[1].children[0].value = "<b>User Creation: </b>"+self.add_user.children[1].children[0]" was created successfully"
+		self.add_user.children[1].children[0].value = "<b>User Creation: </b>"+self.add_user.children[1].children[0]+" was created successfully"
 
 	def on_submit_clicked(self, b):
 		if(self.verify_form()):
