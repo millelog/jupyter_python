@@ -25,11 +25,11 @@ class student_creation_form(object):
                      if(is_row(First, Last, User, Email, row)):
                         row.layout.border='3px solid red'
                         self.header.value="<b><font color=\"red\">Invalid character on the highlighted row</font></b>"
-             else:
-                for row in self.rows:
-                    if(is_row(First, Last, User, Email, row)):
-                        row.layout.border=''
-                        self.header.value="<b>Add a new student or submit the current list of students</b>"
+            else:
+               for row in self.rows:
+                  if(is_row(First, Last, User, Email, row)):
+                     row.layout.border=''
+                     self.header.value="<b>Add a new student or submit the current list of students</b>"
             if User in self.db.get_users():
                for row in self.rows:
                   if User == row.children[2].value:
@@ -42,10 +42,10 @@ class student_creation_form(object):
                         self.header.value="<b>Add a new student or submit the current list of students</b>" 
                         
     def is_row(first, last, user, email, row):
-       return First == row.children[0].value and\
-       Last == row.children[1].value and\
-       User == row.children[2].value and\
-       Email == row.children[3].value
+         return First == row.children[0].value and\
+         Last == row.children[1].value and\
+         User == row.children[2].value and\
+         Email == row.children[3].value
        
     def get_user_hbox(self):
         b = widgets.HBox(width = "100%")
