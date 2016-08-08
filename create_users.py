@@ -49,7 +49,7 @@ def send_instructor_email(instructor_email, users, passwds, emails, smtpserver):
 	""" %(instructor_email, from_email)
 
 	for i in range(len(users)):
-		message+="""Username: %s
+		message+="""	Username: %s
 		Password: %s
 		Email: %s\n\n""" % (users[i], passwds[i], emails[i]) 
 
@@ -72,10 +72,10 @@ def send_new_user_email(email, user, passwd, smtpserver):
 	message = 'Subject: %s\n\n%s' % ("[Important] Jupyter Notebook Account","""To: %s <%s>
 	From: Logan Miller <millelog@oregonstate.edu>
 	Subject: [Important] Jupyter Notebook Account Password\n\n
-	An account has been created under your ONID username and email for the online coding platform Jupyter Notebook. Please go to the link provided and use the following credentials to login.\n
+	An account has been created under your name and email for the online coding platform Jupyter Notebook. Please go to the link provided and use the following credentials to login.\n
 	Username: %s
 	Password: %s
-	Link: http://jupyter.cgrb.oregonstate.edu
+	Link: https://jupyter.cgrb.oregonstate.edu
 	""" % (user, email, user, passwd))
 
 	try:
@@ -109,7 +109,6 @@ def create_user_root(user, passwd, group, email, smtpserver):
     
 	#send and email to this user with the random password
 	send_new_user_email(email, user, passwd, smtpserver)
-	print("User: "+user+" Password: " + passwd + " Email: " + email)
 
 #Create the new user with given user name, group and password
 def create_user(user, passwd, group, email, smtpserver):
@@ -129,7 +128,6 @@ def create_user(user, passwd, group, email, smtpserver):
     
 	#send and email to this user with the random password
 	send_new_user_email(email, user, passwd, smtpserver)
-	print("User: "+user+" Password: " + passwd + " Email: " + email)
 
 def create_all_users(users, emails, smtpserver, group):
 	#list of passwds
