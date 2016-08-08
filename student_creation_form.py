@@ -22,27 +22,31 @@ class student_creation_form(object):
     def logit(self, First, Last, User, Email):
             if not (self.valid_input(First) and self.valid_input(Last) and self.valid_input(User) and self.valid_input(Email)):
                 for row in self.rows:
-                     if(First == row.children[0].value and\
-                      Last == row.children[1].value and\
-                      User == row.children[2].value and\
-                      Email == row.children[3].value):
+                     if(is_row(First, Last, User, Email, row)):
                         row.layout.border='3px solid red'
                         self.header.value="<b><font color=\"red\">Invalid character on the highlighted row</font></b>"
-                     if User in self.db.get_users():
-                        row.layout.border='3px solid red'
-                        self.header.value="<b><font color=\"red\">Highlighted user already exists in the database</font></b>"
-            else:
+             else:
                 for row in self.rows:
-                    if(First == row.children[0].value and\
-                      Last == row.children[1].value and\
-                      User == row.children[2].value and\
-                      Email == row.children[3].value and\
-                      not User in self.db.get_users()):
+                    if(is_row(First, Last, User, Email, row)):
                         row.layout.border=''
                         self.header.value="<b>Add a new student or submit the current list of students</b>"
-
-
-
+            if User in self.db.get_users():
+               for row in self.rows:
+                  if User == row.children[2].value:
+                     row.layout.border='3px solid red'
+                     self.header.value="<b><font color=\"red\">Highlighted user already exists in the database</font></b>"
+            else:
+               for row in self.rows:
+                  if(is_row(First, Last, User, Email, row)):
+                        row.layout.border=''
+                        self.header.value="<b>Add a new student or submit the current list of students</b>" 
+                        
+    def is_row(first, last, user, email, row):
+       return First == row.children[0].value and\
+       Last == row.children[1].value and\
+       User == row.children[2].value and\
+       Email == row.children[3].value
+       
     def get_user_hbox(self):
         b = widgets.HBox(width = "100%")
         boxes = list()
