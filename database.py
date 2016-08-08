@@ -39,7 +39,6 @@ class database(object):
 			'{e}' {tf} NOT NULL);'''\
 			.format(tn=self.tn, id=self.user, tf='TEXT', dp=self.dp, gr=self.g, f=self.f, l=self.l, e=self.e))
 		#print confimration and commit changes
-		print('Database object instantiated')
 		self.commit_db()
 
 	def log_users_creation(self):
