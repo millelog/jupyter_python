@@ -14,7 +14,7 @@ class student_creation_form(object):
         self.info = {'first' : [], 'last' : [], 'USER' : [], 'email' : []}
         self.rows = list()
         self.submit = widgets.Button(description = "Submit Students", button_style='success')
-        self.header = widgets.HTML(value="<b>Add a new student or submit the current list of students</b>")
+        self.header = widgets.HTML(value="<b>Add a new student to the class list</b>")
         self.header.layout.margin='6px 0px 0px 50px'
         self.draw_form()
 
@@ -62,6 +62,7 @@ class student_creation_form(object):
         display(newrow)
         self.submit = widgets.Button(description = "Submit Students", button_style='success')
         display(self.submit)
+        self.header.value = "<b>Add a new student or submit the class list</b>"
         self.submit.on_click(self.on_submit_clicked)
 
 
