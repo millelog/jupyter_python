@@ -86,15 +86,19 @@ class jupyter_wrapper(object):
 		self.add_user.children[1].children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0])
 
 	def on_submit_clicked(self, b):
+		db = users.create_database()
 		if(self.verify_form()):
-			self.add_user.children[0].value = "<b>User Creation:</b>"
-			users.add_user(self.add_user.children[1].children[0].value,
-				self.add_user.children[1].children[1].value,
-				self.add_user.children[2].children[0].value,
-				self.add_user.children[2].children[1].value,
-				self.add_user.children[3].children[0].value.lower(),
-				users.create_database())
-			self.successful_creation()
+			if not self.add_user.children[2].children[0].value in db.get_users():
+				self.add_user.children[0].value = "<b>User Creation:</b>"
+				users.add_user(self.add_user.children[1].children[0].value,
+					self.add_user.children[1].children[1].value,
+					self.add_user.children[2].children[0].value,
+					self.add_user.children[2].children[1].value,
+					self.add_user.children[3].children[0].value.lower(),
+					db)
+				self.successful_creation()
+			else:
+				self.add_user.children[0].value = "<b>User Creation:</b><b><font color=\"red\">User already exists in the database</font></b>"	
 		else:
 			self.add_user.children[0].value = "<b>User Creation:</b>            <b><font color=\"red\">Invalid Character(s) in the Highlighted Field(s)</font></b>"
 
