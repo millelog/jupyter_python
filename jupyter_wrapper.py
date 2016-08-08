@@ -83,7 +83,7 @@ class jupyter_wrapper(object):
 		self.add_user.children[1].children[1].value=''
 		self.add_user.children[2].children[0].value=''
 		self.add_user.children[2].children[1].value=''
-		self.add_user.children[1].children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0])
+		self.add_user.children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0])
 
 	def on_submit_clicked(self, b):
 		db = users.create_database()
