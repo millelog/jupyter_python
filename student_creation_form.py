@@ -13,6 +13,7 @@ class student_creation_form(object):
         #Instantiate master lists of all students info
         self.info = {'first' : [], 'last' : [], 'USER' : [], 'email' : []}
         self.rows = list()
+        self.db = users.create_database()
         self.submit = widgets.Button(description = "Submit Students", button_style='success')
         self.header = widgets.HTML(value="<b>Add a new student to the class list</b>")
         self.header.layout.margin='6px 0px 0px 50px'
@@ -27,14 +28,19 @@ class student_creation_form(object):
                       Email == row.children[3].value):
                         row.layout.border='3px solid red'
                         self.header.value="<b><font color=\"red\">Invalid character on the highlighted row</font></b>"
+                     if User in self.db.get_users():
+                        row.layout.border='3px solid red'
+                        self.header.value="<b><font color=\"red\">Highlighted user already exists in the database</font></b>"
             else:
                 for row in self.rows:
                     if(First == row.children[0].value and\
                       Last == row.children[1].value and\
                       User == row.children[2].value and\
-                      Email == row.children[3].value):
+                      Email == row.children[3].value and\
+                      not User in self.db.get_users()):
                         row.layout.border=''
                         self.header.value="<b>Add a new student or submit the current list of students</b>"
+
 
 
     def get_user_hbox(self):
