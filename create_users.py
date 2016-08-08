@@ -100,7 +100,7 @@ def create_user_root(user, passwd, group, email, smtpserver):
     	#If they're an instructor add them to student group
 	if(group == 'instructor'):
 		add_to_group_root('student', user);
-		copy_instructor_interface(user);
+		subprocess.check_output(["cp","/root/downloads/jupyter_config/Instructor_Panel.ipynb","/home/"+user])
 		add_instructor_email(email);
         
 	#set all file permissions
