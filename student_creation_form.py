@@ -22,7 +22,7 @@ class student_creation_form(object):
     def logit(self, First, Last, User, Email):
             if not (self.valid_input(First) and self.valid_input(Last) and self.valid_input(User) and self.valid_input(Email)):
                 for row in self.rows:
-                    if(First == row.children[0].value and\
+                     if(First == row.children[0].value and\
                       Last == row.children[1].value and\
                       User == row.children[2].value and\
                       Email == row.children[3].value):
