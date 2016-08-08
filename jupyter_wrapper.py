@@ -11,7 +11,6 @@ class jupyter_wrapper(object):
 		self.remove_user = self.create_remove_user()
 		self.change_password = self.create_change_password()
 		self.print_database = self.create_print_database()
-		self.has_run = False
 
 	def create_add_user(self):
 		b = widgets.Box(width="100%")      
@@ -160,6 +159,5 @@ class jupyter_wrapper(object):
 		self.change_password.children[2].children[1].on_click(self.on_pass_clicked)
 
 	def print_db(self):
-		self.has_run = True
 		display(self.print_database)
 		self.print_database.on_click(self.on_print_clicked)
