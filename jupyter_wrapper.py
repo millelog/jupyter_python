@@ -12,7 +12,7 @@ class jupyter_wrapper(object):
 		self.change_password = self.create_change_password()
 		self.print_database = self.create_print_database()
 	
-	def close_all():
+	def close_all(self):
 		self.add_user.close()
 		self.remove_user.close()
 		self.change_password.close()
