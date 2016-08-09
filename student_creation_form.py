@@ -110,7 +110,7 @@ class student_creation_form(object):
 
         #Insert and commit the information dictionary to the database
         db.insert_info()
-        print("All students created succesfully")
+        self.header.value="<b><font color=\"green\">All student accounts created successfully</font></b>"
 
     def valid_form(self):
         for row in self.rows:
@@ -131,6 +131,7 @@ class student_creation_form(object):
                 self.info['last'].append(row.children[1].value)
                 self.info['USER'].append(row.children[2].value)  
                 self.info['email'].append(row.children[3].value)
+                row.close()
             self.add_users(self.info)
         else:
-            print("Invalid character(s) submitted")
+            self.header.value="<b><font color=\"red\">Invalid characters submitted</font></b>"
