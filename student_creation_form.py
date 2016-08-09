@@ -19,7 +19,7 @@ class student_creation_form(object):
         self.header.layout.margin='6px 0px 0px 50px'
         self.draw_form()
 
-    def logit(self, First, Last, User, Email):
+    def check(self, First, Last, User, Email):
             valid = True
             if User in self.db.get_users():
                for row in self.rows:
@@ -52,7 +52,7 @@ class student_creation_form(object):
     def get_user_hbox(self):
         b = widgets.HBox(width = "100%")
         boxes = list()
-        y = interactive(self.logit, First = "", Last = "", User="", Email="")
+        y = interactive(self.check, First = "", Last = "", User="", Email="")
         y.children[0].layout.width = '20%'
         #y.children[0].layout.margin = '4px 15px 4px 0px'
         y.children[1].layout.width = '20%'
