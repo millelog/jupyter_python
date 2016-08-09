@@ -11,6 +11,12 @@ class jupyter_wrapper(object):
 		self.remove_user = self.create_remove_user()
 		self.change_password = self.create_change_password()
 		self.print_database = self.create_print_database()
+	
+	def close_all():
+		self.add_user.close()
+		self.remove_user.close()
+		self.change_password.close()
+		self.print_database.close()
 
 	def create_add_user(self):
 		b = widgets.Box(width="100%")      
