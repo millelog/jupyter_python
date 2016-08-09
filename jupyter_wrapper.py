@@ -79,11 +79,11 @@ class jupyter_wrapper(object):
 		return valid
 
 	def successful_creation(self):
+		self.add_user.children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0])
 		self.add_user.children[1].children[0].value=''
 		self.add_user.children[1].children[1].value=''
 		self.add_user.children[2].children[0].value=''
 		self.add_user.children[2].children[1].value=''
-		self.add_user.children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0])
 
 	def on_submit_clicked(self, b):
 		db = users.create_database()
@@ -111,10 +111,10 @@ class jupyter_wrapper(object):
 			if(user in db.get_users()):
 				#remove user
 				users.remove_user(self.remove_user.children[1].children[0].value, db)
-				#Reset the fields to blank
-				self.remove_user.children[1].children[0].value = ''
 				#Success message
 				self.remove_user.children[0].value="<b>User Deletion: {user} was deleted successfully</b>".format(user=user)
+				#Reset the fields to blank
+				self.remove_user.children[1].children[0].value = ''
 			else:
 				#User not found in database
 				self.remove_user.children[0].value="<b>User Deletion: <font color=\"red\">Username not found in database</font></b>"
@@ -130,11 +130,12 @@ class jupyter_wrapper(object):
 			#set password
 			users.set_custom_password(self.change_password.children[1].value, 
 				self.change_password.children[2].children[0].value, db)
+			#Success message
+			self.change_password.children[0].value = "<b>Change Password: {name}'s password changed</b>".format(name=self.change_password.children[1].value)
 			#Reset fields
 			self.change_password.children[1].value = ''
 			self.change_password.children[2].children[0].value = ''
-			#Success message
-			self.change_password.children[0].value = "<b>Change Password: {name}'s password changed</b>".format(name=self.change_password.children[1].value)
+			
 		else:
 			self.change_password.children[0].value = "<b>Change Password: <font color=\"red\">Username not found in database</font></b>"
 			#user not found in database
