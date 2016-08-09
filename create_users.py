@@ -16,13 +16,9 @@ def is_user(user):
 #add given user to the given group
 def add_to_group(group, user):
 	subprocess.check_output(["sudo", "usermod", "-a", "-G", group, user])
-	#print confirmation
-	print("Added "+user+" to group "+group)
 	
 def add_to_group_root(group, user):
 	subprocess.check_output(["usermod", "-a", "-G", group, user])
-	#print confirmation
-	print("Added "+user+" to group "+group)
 
 #Generate a 10 character long string of randome lower case letters
 def generate_passwd():
