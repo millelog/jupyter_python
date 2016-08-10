@@ -85,7 +85,7 @@ class jupyter_wrapper(object):
 		return valid
 
 	def successful_creation(self):
-		self.add_user.children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0])
+		self.add_user.children[0].value = "<b>User Creation: {name} was created successfully</b>".format(name=self.add_user.children[1].children[0].value)
 		self.add_user.children[1].children[0].value=''
 		self.add_user.children[1].children[1].value=''
 		self.add_user.children[2].children[0].value=''
