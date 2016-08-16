@@ -40,7 +40,7 @@ def set_custom_password(USER, passwd, db, root=False):
 	else:
 		subprocess.check_output(["sudo","/home/public/data/jupyter_python/passwd.exp", USER, passwd])
 
-	with open("/srv/log.txt", "a") as log:
+	with open("/srv/cgrb/log.txt", "a") as log:
 		log.write(str(datetime.now())+" : default password set to custom : "+USER)
 
 def create_form():
