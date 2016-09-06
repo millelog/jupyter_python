@@ -11,7 +11,7 @@ def add_user(first, last, user, email, group, db, root=False):
 	#Format username
 	user = user.lower()
 	#Initalize Email server
-	smtpserver = create.initialize_smtp_server('mail.engr.oregonstate.edu', 25, 'millelog', 'F1c2g3d4b5a')
+	smtpserver = create.initialize_smtp_server('mail.engr.oregonstate.edu', 25, 'millelog', '****')
 
 	#create password then create student
 	passwd = create.generate_passwd()
